@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title> KerniiTV_97 </title>
+	<link rel="stylesheet" href="style.css" >
+
+</head>
+
+<!-- ===== COOKIE BANNER ===== -->
+<div id="cookie-banner">
+    <div class="cookie-content">
+        <h3>🍪 Cookies & Datenschutz</h3>
+        <p>
+            Diese Website verwendet Cookies und externe Dienste (Twitch, DecAPI), 
+            um dir Live-Status der Streamer anzuzeigen. 
+            Deine Entscheidung wird lokal in deinem Browser gespeichert.
+        </p>
+        <p class="cookie-details">
+            Details findest du in unserer 
+            <a href="datenschutz.html">Datenschutzerklärung</a> 
+            und im <a href="impressum.html">Impressum</a>.
+        </p>
+        <div class="cookie-buttons">
+            <button onclick="cookieAblehnen()" class="btn-secondary">
+                Nur Notwendige
+            </button>
+            <button onclick="cookieAkzeptieren()" class="btn-primary">
+                Alle Akzeptieren
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Kleiner Cookie-Button (immer sichtbar) -->
+<button id="cookie-settings-btn" onclick="cookieBannerZeigen()" title="Cookie-Einstellungen">
+    🍪
+</button>
+
+<!-- Cookie-JavaScript -->
+<script>
+    window.addEventListener("load", function() {
+        let entscheidung = localStorage.getItem("cookieEntscheidung");
+        if (!entscheidung) {
+            document.getElementById("cookie-banner").style.display = "flex";
+        }
+    });
+    
+    function cookieAkzeptieren() {
+        localStorage.setItem("cookieEntscheidung", "akzeptiert");
+        localStorage.setItem("cookieDatum", new Date().toISOString());
+        document.getElementById("cookie-banner").style.display = "none";
+    }
+    
+    function cookieAblehnen() {
+        localStorage.setItem("cookieEntscheidung", "abgelehnt");
+        localStorage.setItem("cookieDatum", new Date().toISOString());
+        document.getElementById("cookie-banner").style.display = "none";
+    }
+    
+    function cookieBannerZeigen() {
+        document.getElementById("cookie-banner").style.display = "flex";
+    }
+</script>
+ <body>
+	<nav>
+	
+		<a href="index.html"> Willkommen </a>
+		<a href="Herzblut Kollektiv.html"> Herzblut Kollektiv </a>
+		<a href="diamond.html"> Diamond Painting </a>
+		<a href="epoxid.html"> Epoxidharz Gießen </a>
+	</nav>
+ 
+	<h1>
+		Herzlich Willkommen auf Meiner Website von KerniiTV_97
+	</h1>
+	
+<!-- 	<p> 
+	    ich möchte einfach eine website auf bauen von grund auf ohne KI
+	</p> -->
+	
+	<div class="card-grid">
+	
+	
+			<div class="card">
+				<h2> Über Mich </h2>
+				<p> Hallo! Ich bin Florian.</p>
+					
+				<p> Ich bin 29 Jahre alt und komme aus dem Herzen Deutschlands – dem wunderschönen Thüringen.
+					Wenn ich nicht gerade die Natur genieße, findet man mich meistens dort, wo die Action, die Entspannung und die Kreativität zusammenkommen:
+					im Stream und in meiner Werkstatt.
+				</p>
+			</div>
+		
+		
+		
+			<div class="card">
+				<h2>  Gaming & Streaming: Von der Autobahn in den Nebel </h2>
+					
+				<p> Seit einiger Zeit nehme ich euch auf Twitch und Kick mit in meine Gaming-Welt. Mein Content ist so vielseitig wie meine Interessen:
+
+					Simulationen: Ich liebe es, im Euro Truck Simulator 2 Kilometer zu fressen oder im Landwirtschaftssimulator den eigenen Hof voranzubringen.
+					Action: In Dead by Daylight darf es auch mal etwas spannender und nervenaufreibender zugehen.
+					Offen für Neues: Ich bin kein Profi in jedem Spiel – aber ich bin neugierig! Erklärt es mir kurz, und ich stürze mich ins Abenteuer.
+				</p>
+			</div>
+		
+		
+		
+			<div class="card">
+				<h2> 💎 Meine kreative Seite: Diamond Painting & Epoxidharz </h2>
+					
+				<p> Streaming bedeutet für mich nicht nur Zocken. Diamond Painting ist für mich der perfekte Ausgleich zum stressigen Alltag – fast schon meditativ. Es macht mir riesigen Spaß, 
+					Stein für Stein ein neues Kunstwerk entstehen zu lassen und dabei mit euch im Chat zu quatschen.
+					Abseits der Kamera gehört meine Leidenschaft dem Epoxidharz-Gießen. Ich liebe es, mit verschiedenen Formen und Farben zu experimentieren und einzigartige Unikate zu erschaffen.
+					👉 Das Besondere: Ich fertige meine Epoxidharz-Arbeiten auch gerne auf Wunsch an! Wenn du eine spezielle Vorstellung oder eine Lieblingsfarbe hast,
+					lass es mich wissen – ich erstelle dir dein ganz persönliches Einzelstück.
+				</p>
+			</div>
+		
+		
+		
+			<div class="card">
+				<h2> 👋 Komm vorbei!</h2>
+					
+				<p>Egal, ob du Bock auf entspannte Simulationen, spannende Verfolgungsjagden oder kreative Handarbeit hast – bei mir bist du richtig.
+				   Schau gerne in meinem nächsten Stream vorbei, sag Hallo und werd Teil meiner Community.
+
+				   Ich freue mich auf dich!
+				   Dein Florian / KerniiTV_97
+				</p>
+			</div>
+		
+	</div>
+	
+	<h3>
+		Meine Hobbys
+	</h3>
+	
+	
+	<div class="karten-container">
+	
+		<div class="TEST">
+			<h3> Herzblut Kollektiv </h3>
+			<p> Hier meine Streamingplattformen wo ich Live bin </p>
+			<a href="Herzblut Kollektiv.html"> ⚪ Live / 🟣 Offline </a>
+		</div>
+		
+		<div class="TEST">
+			<h3> Epoxidharz </h3>
+			<p> Hier zeige ich meine fertigen Produkte die ich gemacht habe </p>
+			<a href="epoxid.html"> Epoxidharz Gießen </a>
+		</div>
+		
+		<div class="TEST">
+			<h3> Diamond Painting </h3>
+			<p> Hier seht ihr meine Fertigen Diamond Painting Bilder </p>
+			<a href="diamond.html"> Diamond Painting </a>
+		</div>
+	</div>
+ </body>
+
+ <footer>
+    <p>© 2026 KerniiTV_97 – Alle Rechte vorbehalten</p>
+    <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+    </div>
+</footer>
+</html> 

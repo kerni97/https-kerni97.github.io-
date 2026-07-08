@@ -1,0 +1,148 @@
+<!Doctype html>
+
+<html>
+
+<head>
+
+	<title> Diamond Painting – KerniiTV_97 </title>
+	<link rel="stylesheet" href="style.css" >
+
+</head>
+
+<!-- ===== COOKIE BANNER ===== -->
+<div id="cookie-banner">
+    <div class="cookie-content">
+        <h3>🍪 Cookies & Datenschutz</h3>
+        <p>
+            Diese Website verwendet Cookies und externe Dienste (Twitch, DecAPI), 
+            um dir Live-Status der Streamer anzuzeigen. 
+            Deine Entscheidung wird lokal in deinem Browser gespeichert.
+        </p>
+        <p class="cookie-details">
+            Details findest du in unserer 
+            <a href="datenschutz.html">Datenschutzerklärung</a> 
+            und im <a href="impressum.html">Impressum</a>.
+        </p>
+        <div class="cookie-buttons">
+            <button onclick="cookieAblehnen()" class="btn-secondary">
+                Nur Notwendige
+            </button>
+            <button onclick="cookieAkzeptieren()" class="btn-primary">
+                Alle Akzeptieren
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Kleiner Cookie-Button (immer sichtbar) -->
+<button id="cookie-settings-btn" onclick="cookieBannerZeigen()" title="Cookie-Einstellungen">
+    🍪
+</button>
+
+<!-- Cookie-JavaScript -->
+<script>
+    window.addEventListener("load", function() {
+        let entscheidung = localStorage.getItem("cookieEntscheidung");
+        if (!entscheidung) {
+            document.getElementById("cookie-banner").style.display = "flex";
+        }
+    });
+    
+    function cookieAkzeptieren() {
+        localStorage.setItem("cookieEntscheidung", "akzeptiert");
+        localStorage.setItem("cookieDatum", new Date().toISOString());
+        document.getElementById("cookie-banner").style.display = "none";
+    }
+    
+    function cookieAblehnen() {
+        localStorage.setItem("cookieEntscheidung", "abgelehnt");
+        localStorage.setItem("cookieDatum", new Date().toISOString());
+        document.getElementById("cookie-banner").style.display = "none";
+    }
+    
+    function cookieBannerZeigen() {
+        document.getElementById("cookie-banner").style.display = "flex";
+    }
+</script>
+<body> 
+
+	<nav>
+
+		<a href="index.html"> Willkommen </a>
+		<a href="Herzblut Kollektiv.html"> Herzblut Kollektiv </a>
+		<a href="diamond.html"> Diamond Painting </a>
+		<a href="epoxid.html"> Epoxidharz Gießen </a>
+		
+
+	</nav>
+	
+	<h1> Meine Diamond Painting Werke </h1>
+	
+	<p> Hier siehst du meine liebsten Kunstwerke </p>
+	
+	<div class="slider">
+		
+		<div class="slide" id="slide1">
+			<img src="bilder/diamond1.jpg" alt="Wolf">
+		</div>
+	
+		<div class="slide" id="slide2">
+			<img src="bilder/diamond2.jpg" alt="Berg">
+		</div>
+		
+		<div class="slide" id="slide3">
+			<img src="bilder/diamond3.jpg" alt="Fuchs">
+		</div>
+	</div>
+	
+	<div class="slider-nav">
+		<a href="#slide1"> 1 </a>
+		<a href="#slide2"> 2 </a>
+		<a href="#slide3"> 3 </a>
+	</div>
+	
+	
+	<div class="galerie">
+		
+		<div class="bild-box">
+			<img src="bilder/diamond6.jpg" alt="Eule" >
+			<span class="neu"> NEU </span>
+			<p> Eule mit Traumfänger </p>
+		</div>
+		
+		<div class="bild-box">
+			<img src="bilder/diamond1.jpg" alt="Wolf" >
+			<p> Wolf: „Der Wächter des Waldes“ </p>
+		</div>
+
+		<div class="bild-box">
+			<img src="bilder/diamond4.jpg" alt="Sonnenuntergang: „Abendrot am Meer“" >
+		    <p> Sonnenuntergang: „Abendrot am Meer“ </p>
+		</div>
+
+		<div class="bild-box">
+			<img src="bilder/diamond5.jpg" alt="Motorrad: „Freedom Ride“" >
+			<p> Motorrad: „Freedom Ride“ </p>
+		</div>
+		
+		<div class="bild-box">
+			<img src="bilder/diamond3.jpg" alt="Fuchs" >
+			<p> Fuchs </p>
+		</div>
+		
+		<div class="bild-box">
+			<img src="bilder/diamond2.jpg" alt="Berge mit Kirschblüten Baum" >
+			<p> "Berge mit Kirschblüten Baum" </p>
+		</div>
+	</div>
+	
+</body>
+
+ <footer>
+    <p>© 2026 KerniiTV_97 – Alle Rechte vorbehalten</p>
+    <div class="footer-links">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+    </div>
+</footer>
+</html>
