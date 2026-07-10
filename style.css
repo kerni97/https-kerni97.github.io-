@@ -1,0 +1,973 @@
+/* === GRUNDLAGEN === */
+body { 
+    background: linear-gradient(135deg, #2d1b3d, #8b2c5c, #d64545, #f59e0b);
+    background-size: 400% 400%;
+    animation: gradient-flow 50s ease infinite;
+    color: white;
+    margin: 0;
+    min-height: 100vh;
+    padding: 20px;
+    font-family: sans-serif;
+}
+
+/* === Hintergrund-Animation === */
+@keyframes gradient-flow {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* === NAVIGATION === */
+.glass-nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 35px;
+    margin-bottom: 40px;
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 24px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.3);
+}
+
+.logo { 
+    font-size: 1.6rem;  
+    font-weight: bold;  
+    letter-spacing: 0.5px;  
+}
+
+nav {
+    display: flex;
+    gap: 30px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: 500;
+    transition: opacity 0.3s;
+    opacity: 0.85;
+}
+
+nav a:hover {
+    opacity: 1;
+}
+
+/* === HERO-BEREICH === */
+.hero {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.hero h1 {
+    font-size: 3.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    margin: 0 0 20px 0;
+}
+
+.hero h1 span {
+    background: linear-gradient(135deg, #ffd700, #ff6b9d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.hero p {
+    font-size: 1.3rem;
+    opacity: 0.9;
+    margin: 0;
+}
+
+.hero-info {
+    font-size: 0.95rem;
+    opacity: 0.7;
+    margin-top: 20px;
+    letter-spacing: 0.5px;
+    font-weight: 500;
+}
+
+/* === KARTEN-CONTAINER (Content) === */
+.cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 0 auto 80px;
+    padding: 0 20px;
+}
+
+/* === EINZELNE CONTENT-KARTE === */
+.card {
+    padding: 35px 30px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: all 0.4s ease;
+}
+
+.card:hover {
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.card h2 { 
+    font-size: 1.4rem;
+    margin: 0 0 15px 0;
+    font-weight: 700;
+}
+
+.card p {
+    margin: 0;
+    line-height: 1.6;
+    opacity: 0.9;
+}
+
+/* === SOCIAL KARTEN CONTAINER === */
+.socials {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    max-width: 1200px;
+    margin: 80px auto 60px;
+    padding: 0 20px;
+}
+
+.social-card {
+    padding: 35px 25px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: all 0.4s ease;
+}
+
+.social-card:hover {
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.social-icon-big {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+.social-card h3 {
+    font-size: 1.5rem;
+    margin: 0 0 8px 0;
+    font-weight: 700;
+}
+
+.social-card p {
+    margin: 0 0 15px 0;
+    opacity: 0.85;
+    font-size: 0.95rem;
+}
+
+.social-handle {
+    display: block;
+    font-family: monospace;
+    font-size: 0.95rem;
+    opacity: 0.7;
+    margin-bottom: 25px;
+    letter-spacing: 0.5px;
+}
+
+.social-btn {
+    display: inline-block;
+    padding: 12px 30px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    background: rgba(255, 255, 255, 0.1);
+    transition: all 0.3s ease;
+}
+
+/* === Twitch Hover === */
+.twitch-card:hover {
+    background: rgba(145, 70, 255, 0.15);
+    border-color: rgba(145, 70, 255, 0.4);
+}
+.twitch-card .social-btn:hover {
+    background: rgba(145, 70, 255, 0.6);
+    border-color: rgba(145, 70, 255, 0.8);
+    box-shadow: 0 8px 20px rgba(145, 70, 255, 0.4);
+}
+
+/* === Instagram Hover === */
+.insta-card:hover {
+    background: linear-gradient(135deg, rgba(225, 48, 108, 0.15), rgba(253, 187, 45, 0.15));
+    border-color: rgba(253, 187, 45, 0.4);
+}
+.insta-card .social-btn:hover {
+    background: linear-gradient(135deg, rgba(225, 48, 108, 0.6), rgba(253, 187, 45, 0.6));
+    border-color: rgba(253, 187, 45, 0.8);
+    box-shadow: 0 8px 20px rgba(225, 48, 108, 0.4);
+}
+
+/* === Discord Hover === */
+.discord-card:hover {
+    background: rgba(88, 101, 242, 0.15);
+    border-color: rgba(88, 101, 242, 0.4);
+}
+.discord-card .social-btn:hover {
+    background: rgba(88, 101, 242, 0.6);
+    border-color: rgba(88, 101, 242, 0.8);
+    box-shadow: 0 8px 20px rgba(88, 101, 242, 0.4);
+}
+
+/* === WhatsApp Hover === */
+.whatsapp-card:hover {
+    background: rgba(37, 211, 102, 0.15);
+    border-color: rgba(37, 211, 102, 0.4);
+}
+.whatsapp-card .social-btn:hover {
+    background: rgba(37, 211, 102, 0.6);
+    border-color: rgba(37, 211, 102, 0.8);
+    box-shadow: 0 8px 20px rgba(37, 211, 102, 0.4);
+}
+
+/* === FOOTER === */
+.footer {
+    margin-top: 40px;
+    padding: 25px 40px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.copyright {
+    margin: 0;
+    opacity: 0.8;
+    font-size: 0.95rem;
+    letter-spacing: 0.3px;
+}
+
+.footer-links {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-links a {
+    color: white;
+    text-decoration: none;
+    opacity: 0.8;
+    font-size: 0.95rem;
+    transition: opacity 0.3s ease;
+}
+
+.footer-links a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+/* === WRAPPER FÜR KARTEN (Schweben) === */
+.card-wrapper {
+    display: flex;
+    width: 100%;
+    animation: gentle-float 6s ease-in-out infinite;
+}
+
+.card-wrapper > .card,
+.card-wrapper > .social-card {
+    width: 100%;
+}
+
+/* Wellen-Effekt: jede Karte startet leicht versetzt */
+.card-wrapper:nth-child(1) { animation-delay: 0s; }
+.card-wrapper:nth-child(2) { animation-delay: 0.7s; }
+.card-wrapper:nth-child(3) { animation-delay: 1.4s; }
+.card-wrapper:nth-child(4) { animation-delay: 2.1s; }
+
+@keyframes gentle-float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+}
+
+/* === SCROLL-ANIMATIONEN === */
+.fade-in {
+    opacity: 0;
+    transition: opacity 0.8s ease-out;
+}
+
+.fade-in.visible {
+    opacity: 1;
+}
+
+/* === Legal Content (Impressum & Datenschutz) === */
+.legal-content {
+    max-width: 900px;
+    margin: 40px auto 60px;
+    padding: 0 20px;
+}
+
+.legal-box {
+    padding: 50px 45px;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.legal-box h1 {
+    font-size: 2.2rem;
+    margin: 0 0 30px 0;
+    background: linear-gradient(135deg, #ffd700, #ff6b9d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.legal-box h2 {
+    font-size: 1.4rem;
+    margin: 30px 0 12px 0;
+    color: #ffd700;
+}
+
+.legal-box h3 {
+    font-size: 1.1rem;
+    margin: 20px 0 8px 0;
+    opacity: 0.95;
+}
+
+.legal-box p {
+    line-height: 1.7;
+    opacity: 0.9;
+    margin: 0 0 15px 0;
+}
+
+.legal-box ul {
+    line-height: 1.8;
+    opacity: 0.9;
+    padding-left: 25px;
+    margin-bottom: 15px;
+}
+
+.legal-box a {
+    color: #ffd700;
+    text-decoration: none;
+    border-bottom: 1px solid rgba(255, 215, 0, 0.4);
+    transition: all 0.3s ease;
+}
+
+.legal-box a:hover {
+    color: #ff6b9d;
+    border-bottom-color: #ff6b9d;
+}
+
+/* Logo als Link (funktioniert auf allen Seiten) */
+.logo a {
+    color: white;
+    text-decoration: none;
+}
+
+/* === Streamer-Section === */
+.streamer-section {
+    max-width: 1200px;
+    margin: 40px auto 60px;
+    padding: 0 20px;
+}
+
+.section-title {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 40px;
+    background: linear-gradient(135deg, #ffd700, #ff6b9d);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.streamer-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* Einzelne Streamer-Karte */
+.streamer-card {
+    position: relative;
+    padding: 30px 25px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    transition: all 0.4s ease;
+}
+
+.streamer-card:hover {
+    transform: translateY(-8px);
+    background: rgba(255, 255, 255, 0.15);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* LIVE-Status */
+.streamer-card.live {
+    background: rgba(255, 20, 100, 0.25);
+    border-color: rgba(255, 50, 130, 0.7);
+    box-shadow: 
+        0 8px 32px rgba(255, 20, 100, 0.4),
+        0 0 50px rgba(255, 20, 100, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+    animation: live-pulse 2s ease-in-out infinite;
+}
+
+@keyframes live-pulse {
+    0%, 100% {
+        box-shadow: 
+            0 8px 32px rgba(255, 20, 100, 0.4),
+            0 0 50px rgba(255, 20, 100, 0.3),
+            inset 0 1px 0 rgba(255, 255, 255, 0.4);
+        transform: scale(1);
+    }
+    50% {
+        box-shadow: 
+            0 8px 32px rgba(255, 20, 100, 0.6),
+            0 0 80px rgba(255, 20, 100, 0.5),
+            inset 0 1px 0 rgba(255, 255, 255, 0.5);
+        transform: scale(1.02);
+    }
+}
+
+/* Live-Badge oben rechts */
+.live-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    padding: 5px 12px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.live-badge.live {
+    background: linear-gradient(135deg, #ff0064, #ff1493);
+    border-color: rgba(255, 255, 255, 0.5);
+    color: white;
+    font-weight: 700;
+    box-shadow: 0 4px 15px rgba(255, 0, 100, 0.6);
+    animation: badge-blink 1.5s ease-in-out infinite;
+}
+
+/* Avatar (Kreis mit Initialen) */
+.streamer-avatar {
+    width: 80px;
+    height: 80px;
+    margin: 15px auto 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #ffd700, #ff6b9d);
+    border-radius: 50%;
+    font-size: 1.4rem;
+    font-weight: bold;
+    color: #2d1b3d;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* Streamer-Name */
+.streamer-card h3 {
+    margin: 0 0 10px 0;
+    font-size: 1.3rem;
+}
+
+.streamer-desc {
+    margin: 0 0 20px 0;
+    opacity: 0.85;
+    font-size: 0.95rem;
+    min-height: 40px;
+}
+
+/* Stats */
+.streamer-stats {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 20px;
+    font-size: 0.9rem;
+    opacity: 0.9;
+}
+
+.streamer-stats span {
+    display: block;
+}
+
+/* Zum Kanal Button */
+.streamer-btn {
+    display: inline-block;
+    padding: 10px 24px;
+    border-radius: 12px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    border: 1px solid rgba(145, 70, 255, 0.5);
+    background: rgba(145, 70, 255, 0.3);
+    transition: all 0.3s ease;
+}
+
+.streamer-btn:hover {
+    background: rgba(145, 70, 255, 0.7);
+    border-color: rgba(145, 70, 255, 0.9);
+    box-shadow: 0 8px 20px rgba(145, 70, 255, 0.4);
+    transform: translateY(-2px);
+}
+
+/* Herzblut-Liste */
+.herzblut-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0 0 0;
+}
+
+.herzblut-list li {
+    padding: 8px 0;
+    font-size: 1.05rem;
+    opacity: 0.9;
+}
+
+body.herzblut-bg {
+    background: linear-gradient(135deg, #1a0033, #4a148c, #9146ff, #ff1493);
+    background-size: 400% 400%;
+    animation: gradient-flow 20s ease infinite;
+}
+
+/* LIVE-Karten immer zuerst anzeigen */
+.streamer-grid {
+    display: grid;
+}
+
+.streamer-card {
+    order: 1;
+}
+
+.streamer-card.live {
+    order: 0;
+}
+
+/* === Spezieller Hintergrund für Diamond Painting === */
+body.diamond-bg {
+    background: linear-gradient(135deg, #001845, #0353a4, #00b4d8, #90e0ef);
+    background-size: 400% 400%;
+    animation: gradient-flow 20s ease infinite;
+}
+
+/* === Galerie-Sektion === */
+.gallery-section {
+    max-width: 1200px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.section-subtitle {
+    text-align: center;
+    opacity: 0.85;
+    margin: -20px 0 40px 0;
+    font-size: 1.05rem;
+}
+
+.gallery-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
+    margin-bottom: 30px;
+}
+
+.gallery-item {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px);
+    box-shadow: 
+        0 25px 50px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+/* Bild-Platzhalter (später durch echte Bilder ersetzen!) */
+.gallery-image {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 180, 216, 0.3), rgba(144, 224, 239, 0.3));
+    font-size: 4rem;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+/* Info unter dem Bild */
+.gallery-info {
+    padding: 20px 25px;
+}
+
+.gallery-info h3 {
+    margin: 0 0 5px 0;
+    font-size: 1.2rem;
+}
+
+.gallery-info p {
+    margin: 0;
+    opacity: 0.85;
+    font-size: 0.95rem;
+}
+
+/* Hinweis-Text */
+.gallery-note {
+    text-align: center;
+    opacity: 0.75;
+    font-size: 0.95rem;
+    margin-top: 30px;
+}
+
+/* CTA Button */
+.cta-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 32px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1.05rem;
+    background: rgba(145, 70, 255, 0.4);
+    border: 1px solid rgba(145, 70, 255, 0.6);
+    transition: all 0.3s ease;
+}
+
+.cta-btn:hover {
+    background: rgba(145, 70, 255, 0.7);
+    transform: translateY(-3px);
+    box-shadow: 0 8px 20px rgba(145, 70, 255, 0.5);
+}
+
+.gallery-image {
+    aspect-ratio: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, rgba(0, 180, 216, 0.3), rgba(144, 224, 239, 0.3));
+    font-size: 4rem;
+    filter: drop-shadow(0 0 10px rgba(255, 255, 255, 0.3));
+}
+
+.gallery-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* === Diamond Painting: Anpassungen für Farben === */
+
+/* Hero-Titel: Diamond-Look statt Gold-Pink */
+body.diamond-bg .hero h1 span {
+    background: linear-gradient(135deg, #ffffff, #90e0ef, #00b4d8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(144, 224, 239, 0.5));
+}
+
+/* Section-Titel "Meine Werke" */
+body.diamond-bg .section-title {
+    background: linear-gradient(135deg, #ffffff, #90e0ef, #00b4d8);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+/* Footer-Links */
+body.diamond-bg .footer-links a {
+    color: #90e0ef;
+}
+
+body.diamond-bg .footer-links a:hover {
+    color: #ffffff;
+}
+
+/* === Spezieller Hintergrund für Epoxidharz === */
+body.epoxid-bg {
+    background: linear-gradient(135deg, #3d1f00, #8b4000, #f59e0b, #fbbf24);
+    background-size: 400% 400%;
+    animation: gradient-flow 20s ease infinite;
+}
+
+/* === Epoxidharz: Farb-Anpassungen === */
+body.epoxid-bg .hero h1 span {
+    background: linear-gradient(135deg, #fef3c7, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    filter: drop-shadow(0 0 20px rgba(251, 191, 36, 0.5));
+}
+
+body.epoxid-bg .section-title {
+    background: linear-gradient(135deg, #fef3c7, #fbbf24, #f59e0b);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+body.epoxid-bg .gallery-image {
+    background: linear-gradient(135deg, rgba(251, 191, 36, 0.3), rgba(245, 158, 11, 0.3));
+}
+
+/* === Auftrags-Sektion === */
+.order-section {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.order-box {
+    padding: 50px 45px;
+    text-align: center;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 24px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.25);
+}
+
+.order-box h2 {
+    font-size: 1.8rem;
+    margin: 0 0 20px 0;
+    background: linear-gradient(135deg, #fef3c7, #fbbf24);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.order-box > p {
+    font-size: 1.05rem;
+    line-height: 1.7;
+    opacity: 0.9;
+    margin-bottom: 30px;
+}
+
+/* Features (Wunschfarben, Größe, Idee) */
+.order-features {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+}
+
+.feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    min-width: 150px;
+}
+
+.feature-icon {
+    font-size: 2.5rem;
+    filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.3));
+}
+
+.feature-text {
+    font-size: 0.95rem;
+    opacity: 0.9;
+    font-weight: 500;
+}
+
+/* Auftrag-Button */
+.order-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 16px 40px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.5), rgba(251, 191, 36, 0.5));
+    border: 1px solid rgba(251, 191, 36, 0.6);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(245, 158, 11, 0.3);
+}
+
+.order-btn:hover {
+    background: linear-gradient(135deg, rgba(245, 158, 11, 0.8), rgba(251, 191, 36, 0.8));
+    transform: translateY(-3px);
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.5);
+}
+
+.order-note {
+    margin-top: 20px;
+    opacity: 0.8;
+    font-size: 0.95rem;
+}
+
+/* === TikTok Button === */
+.tiktok-btn {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 14px 32px;
+    border-radius: 14px;
+    text-decoration: none;
+    color: white;
+    font-weight: 600;
+    font-size: 1.05rem;
+    background: linear-gradient(135deg, #ff0050, #000000, #00f2ea);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(255, 0, 80, 0.3);
+}
+
+.tiktok-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 
+        0 10px 25px rgba(255, 0, 80, 0.4),
+        0 10px 25px rgba(0, 242, 234, 0.4);
+    filter: brightness(1.2);
+}
+
+/* === UNIVERSELLE LESBARKEITS-VERBESSERUNG === */
+/* Damit Texte bei jeder Hintergrundfarbe gut lesbar sind */
+
+/* --- KARTEN: Etwas dunkler & weniger transparent --- */
+.card,
+.gallery-item,
+.social-card,
+.streamer-card,
+.order-box,
+.legal-box {
+    background: rgba(20, 10, 30, 0.45) !important;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(25px) saturate(180%);
+    -webkit-backdrop-filter: blur(25px) saturate(180%);
+}
+
+.card:hover,
+.gallery-item:hover,
+.social-card:hover,
+.streamer-card:hover {
+    background: rgba(20, 10, 30, 0.6) !important;
+}
+
+/* --- NAVIGATION: Auch etwas dunkler --- */
+.glass-nav {
+    background: rgba(20, 10, 30, 0.4) !important;
+}
+
+/* --- FOOTER: Genauso --- */
+.footer {
+    background: rgba(20, 10, 30, 0.35) !important;
+}
+
+/* --- ALLE ÜBERSCHRIFTEN: Text-Schatten für Kontrast --- */
+h1, h2, h3,
+.hero h1,
+.section-title,
+.card h2,
+.gallery-info h3,
+.social-card h3,
+.streamer-card h3,
+.order-box h2,
+.legal-box h1,
+.legal-box h2 {
+    text-shadow: 
+        0 2px 4px rgba(0, 0, 0, 0.5),
+        0 0 20px rgba(0, 0, 0, 0.3);
+}
+
+/* --- ALLE TEXTE: Voller Kontrast --- */
+.card p,
+.gallery-info p,
+.social-card p,
+.hero p,
+.hero-info,
+.section-subtitle,
+.streamer-desc,
+.streamer-stats,
+.order-box > p,
+.order-note,
+.legal-box p,
+.legal-box ul,
+.herzblut-list li,
+.copyright,
+.footer-links a,
+nav a {
+    color: #ffffff;
+    opacity: 0.95;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Logo & Nav Links --- */
+.logo,
+.logo a {
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+/* --- Gradient-Texte (Hero-Titel): Zusätzlicher Glow --- */
+.hero h1 span,
+.section-title,
+.order-box h2,
+.legal-box h1 {
+    filter: drop-shadow(0 3px 8px rgba(0, 0, 0, 0.6));
+}

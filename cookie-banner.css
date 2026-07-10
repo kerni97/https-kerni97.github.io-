@@ -1,0 +1,293 @@
+/* COOKIE BANNER - KerniiTV_97 - ISOLIERT */
+
+.ktv-cookie-banner {
+    position: fixed !important;
+    bottom: 20px !important;
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    width: 90% !important;
+    max-width: 1000px !important;
+    background: rgba(20, 20, 20, 0.95) !important;
+    backdrop-filter: blur(10px) !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: 20px !important;
+    padding: 20px 30px !important;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4) !important;
+    z-index: 9999 !important;
+    display: none;
+    box-sizing: border-box !important;
+}
+
+.ktv-cookie-banner.ktv-show {
+    display: block;
+    animation: ktvCookieSlideUp 0.5s ease-out;
+}
+
+@keyframes ktvCookieSlideUp {
+    from { opacity: 0; transform: translate(-50%, 100px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+.ktv-cookie-content {
+    display: flex !important;
+    align-items: center !important;
+    gap: 20px !important;
+    flex-wrap: wrap !important;
+}
+
+.ktv-cookie-icon {
+    font-size: 40px !important;
+    flex-shrink: 0 !important;
+}
+
+.ktv-cookie-text {
+    flex: 1 !important;
+    min-width: 250px !important;
+    color: #F5E6D3 !important;
+}
+
+.ktv-cookie-text h3 {
+    margin: 0 0 8px 0 !important;
+    font-size: 18px !important;
+    color: #D4AF37 !important;
+    font-weight: 600 !important;
+    background: none !important;
+    -webkit-text-fill-color: #D4AF37 !important;
+}
+
+.ktv-cookie-text p {
+    margin: 0 !important;
+    font-size: 14px !important;
+    line-height: 1.5 !important;
+    color: #F5E6D3 !important;
+}
+
+.ktv-cookie-link {
+    color: #D4AF37 !important;
+    text-decoration: underline !important;
+}
+
+.ktv-cookie-link:hover {
+    color: #F5E6D3 !important;
+}
+
+.ktv-cookie-buttons {
+    display: flex !important;
+    gap: 10px !important;
+    flex-shrink: 0 !important;
+    flex-wrap: wrap !important;
+}
+
+.ktv-cookie-btn {
+    padding: 12px 20px !important;
+    border: none !important;
+    border-radius: 10px !important;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+    font-family: inherit !important;
+    white-space: nowrap !important;
+}
+
+.ktv-cookie-btn-settings,
+.ktv-cookie-btn-decline {
+    background: transparent !important;
+    color: #F5E6D3 !important;
+    border: 1px solid rgba(245, 230, 211, 0.3) !important;
+}
+
+.ktv-cookie-btn-settings:hover,
+.ktv-cookie-btn-decline:hover {
+    background: rgba(245, 230, 211, 0.1) !important;
+    border-color: #F5E6D3 !important;
+}
+
+.ktv-cookie-btn-accept {
+    background: linear-gradient(135deg, #D4AF37, #B8941F) !important;
+    color: #1a1a1a !important;
+}
+
+.ktv-cookie-btn-accept:hover {
+    background: linear-gradient(135deg, #E5C158, #D4AF37) !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4) !important;
+}
+
+.ktv-cookie-settings-modal {
+    display: none;
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 100% !important;
+    background: rgba(0, 0, 0, 0.7) !important;
+    backdrop-filter: blur(5px) !important;
+    z-index: 10000 !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 20px !important;
+    box-sizing: border-box !important;
+}
+
+.ktv-cookie-settings-modal.ktv-show {
+    display: flex;
+    animation: ktvFadeIn 0.3s ease-out;
+}
+
+@keyframes ktvFadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.ktv-cookie-settings-content {
+    background: #1a1a1a !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    border-radius: 20px !important;
+    max-width: 600px !important;
+    width: 100% !important;
+    max-height: 90vh !important;
+    overflow-y: auto !important;
+    color: #F5E6D3 !important;
+    box-sizing: border-box !important;
+}
+
+.ktv-cookie-settings-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: center !important;
+    padding: 25px 30px !important;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.2) !important;
+}
+
+.ktv-cookie-settings-header h2 {
+    margin: 0 !important;
+    color: #D4AF37 !important;
+    font-size: 22px !important;
+    background: none !important;
+    -webkit-text-fill-color: #D4AF37 !important;
+}
+
+.ktv-cookie-close {
+    background: none !important;
+    border: none !important;
+    color: #F5E6D3 !important;
+    font-size: 24px !important;
+    cursor: pointer !important;
+    padding: 5px 10px !important;
+    border-radius: 8px !important;
+}
+
+.ktv-cookie-close:hover {
+    background: rgba(245, 230, 211, 0.1) !important;
+}
+
+.ktv-cookie-settings-body {
+    padding: 25px 30px !important;
+}
+
+.ktv-cookie-settings-intro {
+    margin: 0 0 20px 0 !important;
+    font-size: 14px !important;
+    color: #F5E6D3 !important;
+    opacity: 0.9 !important;
+}
+
+.ktv-cookie-category {
+    padding: 20px 0 !important;
+    border-bottom: 1px solid rgba(245, 230, 211, 0.1) !important;
+}
+
+.ktv-cookie-category:last-child {
+    border-bottom: none !important;
+}
+
+.ktv-cookie-category-header {
+    display: flex !important;
+    justify-content: space-between !important;
+    align-items: flex-start !important;
+    gap: 20px !important;
+}
+
+.ktv-cookie-category h3 {
+    margin: 0 0 5px 0 !important;
+    font-size: 16px !important;
+    color: #D4AF37 !important;
+    background: none !important;
+    -webkit-text-fill-color: #D4AF37 !important;
+}
+
+.ktv-cookie-category p {
+    margin: 0 !important;
+    font-size: 13px !important;
+    color: #F5E6D3 !important;
+    opacity: 0.8 !important;
+}
+
+.ktv-cookie-switch {
+    position: relative !important;
+    display: inline-block !important;
+    width: 50px !important;
+    height: 26px !important;
+    flex-shrink: 0 !important;
+}
+
+.ktv-cookie-switch input {
+    opacity: 0 !important;
+    width: 0 !important;
+    height: 0 !important;
+}
+
+.ktv-cookie-slider {
+    position: absolute !important;
+    cursor: pointer !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
+    background: rgba(245, 230, 211, 0.2) !important;
+    transition: 0.3s !important;
+    border-radius: 26px !important;
+}
+
+.ktv-cookie-slider:before {
+    position: absolute !important;
+    content: "" !important;
+    height: 20px !important;
+    width: 20px !important;
+    left: 3px !important;
+    bottom: 3px !important;
+    background: #F5E6D3 !important;
+    transition: 0.3s !important;
+    border-radius: 50% !important;
+}
+
+.ktv-cookie-switch input:checked + .ktv-cookie-slider {
+    background: #D4AF37 !important;
+}
+
+.ktv-cookie-switch input:checked + .ktv-cookie-slider:before {
+    transform: translateX(24px) !important;
+}
+
+.ktv-cookie-switch input:disabled + .ktv-cookie-slider {
+    background: rgba(212, 175, 55, 0.5) !important;
+}
+
+.ktv-cookie-settings-footer {
+    display: flex !important;
+    gap: 10px !important;
+    padding: 20px 30px !important;
+    border-top: 1px solid rgba(212, 175, 55, 0.2) !important;
+    justify-content: flex-end !important;
+    flex-wrap: wrap !important;
+}
+
+@media (max-width: 768px) {
+    .ktv-cookie-content { flex-direction: column !important; text-align: center !important; }
+    .ktv-cookie-buttons { width: 100% !important; flex-direction: column !important; }
+    .ktv-cookie-btn { width: 100% !important; }
+    .ktv-cookie-category-header { flex-direction: column !important; }
+    .ktv-cookie-settings-footer { flex-direction: column !important; }
+    .ktv-cookie-settings-footer .ktv-cookie-btn { width: 100% !important; }
+}
