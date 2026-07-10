@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutz - KerniiTV_97</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>  
+
+    <!-- Navigation -->
+    <header class="glass-nav">
+        <div class="logo"><a href="index.html">KerniiTV_97</a></div>
+        <nav>
+            <a href="index.html">← Zurück zur Startseite</a>
+        </nav>
+    </header>
+
+    <!-- Datenschutz -->
+    <section class="legal-content">
+        <div class="legal-box">
+            <h1>🔒 Datenschutzerklärung</h1>
+
+            <p>
+                Ich freue mich über dein Interesse an meiner Website. Der Schutz 
+                deiner Privatsphäre ist mir sehr wichtig. Nachstehend informiere 
+                ich dich über den Umgang mit deinen Daten.
+            </p>
+
+            <h2>1. Verantwortliche Stelle</h2>
+            <p>
+                <strong>KerniiTV_97</strong><br>
+                Florian Kern<br>
+                Lischmattstrasse<br>
+                5746 Walterswil SO<br>
+                Schweiz<br><br>
+                📧 E-Mail: <a href="mailto:Kerni_twitch@outlook.de">Kerni_twitch@outlook.de</a>
+            </p>
+
+            <h2>2. Erhebung von Daten beim Besuch der Website</h2>
+            <p>
+                Beim Besuch dieser Website werden automatisch technische Daten 
+                erfasst, die dein Browser übermittelt:
+            </p>
+            <ul>
+                <li>IP-Adresse</li>
+                <li>Datum und Uhrzeit des Zugriffs</li>
+                <li>Browsertyp und -version</li>
+                <li>Betriebssystem</li>
+                <li>Referrer-URL (zuvor besuchte Seite)</li>
+            </ul>
+            <p>
+                Diese Daten werden ausschließlich zur Sicherstellung des Betriebs 
+                der Website erhoben und nicht mit anderen Datenquellen zusammengeführt.
+            </p>
+
+            <h2>3. Cookies</h2>
+            <p>
+                Diese Website verwendet <strong>keine Cookies</strong> zur Nachverfolgung 
+                oder für Werbezwecke.
+            </p>
+
+            <h2>4. Externe Links & Social Media</h2>
+            <p>
+                Diese Website enthält Links zu folgenden externen Plattformen:
+            </p>
+            <ul>
+                <li>🎮 <strong>Twitch:</strong> <a href="https://twitch.tv/kerniitv_97" target="_blank">twitch.tv/kerniitv_97</a></li>
+                <li>📷 <strong>Instagram:</strong> <a href="https://instagram.com/kerniitv_97" target="_blank">instagram.com/kerniitv_97</a></li>
+                <li>💬 <strong>Discord:</strong> Herzblut_Kollektiv Server</li>
+                <li>📱 <strong>WhatsApp Kanal:</strong> KerniiTV_97</li>
+            </ul>
+            <p>
+                Beim Klick auf diese Links wirst du zu den externen Anbietern weitergeleitet. 
+                Es gelten deren jeweilige Datenschutzbestimmungen. Ich habe keinen Einfluss 
+                auf die Datenverarbeitung dieser Anbieter.
+            </p>
+
+            <h2>5. Kontaktaufnahme</h2>
+            <p>
+                Wenn du mir per E-Mail schreibst, werden deine Angaben zur Bearbeitung 
+                der Anfrage und für den Fall von Anschlussfragen gespeichert. Diese Daten 
+                gebe ich nicht ohne deine Einwilligung weiter.
+            </p>
+
+            <h2>6. Deine Rechte</h2>
+            <p>
+                Du hast jederzeit das Recht auf:
+            </p>
+            <ul>
+                <li>Auskunft über deine gespeicherten Daten</li>
+                <li>Berichtigung falscher Daten</li>
+                <li>Löschung deiner Daten</li>
+                <li>Einschränkung der Verarbeitung</li>
+                <li>Widerspruch gegen die Verarbeitung</li>
+                <li>Datenübertragbarkeit</li>
+            </ul>
+            <p>
+                Wende dich hierfür an: 
+                <a href="mailto:Kerni_twitch@outlook.de">Kerni_twitch@outlook.de</a>
+            </p>
+
+            <h2>7. Rechtsgrundlage</h2>
+            <p>
+                Für Besucher aus der EU gelten die Bestimmungen der 
+                Datenschutz-Grundverordnung (DSGVO). Für Besucher aus der Schweiz 
+                gilt das Schweizer Bundesgesetz über den Datenschutz (DSG).
+            </p>
+
+            <h2>8. Änderungen dieser Datenschutzerklärung</h2>
+            <p>
+                Ich behalte mir vor, diese Datenschutzerklärung anzupassen, damit 
+                sie stets den aktuellen rechtlichen Anforderungen entspricht.
+            </p>
+
+            <p><em>Stand: <span id="stand-datum"></span></em></p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">© <span id="year"></span> KerniiTV_97 – Alle Rechte vorbehalten</p>
+            <div class="footer-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Copyright-Jahr
+        document.getElementById('year').textContent = new Date().getFullYear();
+        
+        // Aktuelles Datum als "Stand"
+        const heute = new Date();
+        const monate = ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 
+                        'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'];
+        document.getElementById('stand-datum').textContent = 
+            monate[heute.getMonth()] + ' ' + heute.getFullYear();
+    </script>
+
+</body>
+</html>
