@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Epoxidharz Auftrag - KerniiTV_97</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cookie-banner.css">
+</head>
+
+<body class="epoxid-bg">  
+
+    <div id="navigation-placeholder"></div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>📧 <span>Auftragsarbeit</span></h1>
+        <p>Dein persönliches Epoxidharz-Kunstwerk</p>
+        <p class="hero-info">🎨 Individuell &nbsp;•&nbsp; 💎 Einzigartig &nbsp;•&nbsp; 💜 Für dich gemacht</p>
+    </section>
+
+    <!-- Info Karten -->
+    <section class="cards">
+
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>🎨 Deine Wunschfarben</h2>
+                <p>
+                    Du hast eine bestimmte Farbkombination im Kopf? 
+                    Egal ob Pastell, kräftig, glitzernd oder in deinen 
+                    Lieblingsfarben – ich setze deine Ideen um! ✨
+                </p>
+            </div>
+        </div>
+
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>💡 Deine Idee</h2>
+                <p>
+                    Ob Teelicht, Seifenspender, Deko-Figuren oder 
+                    ein ganz besonderes Geschenk – erzähl mir deine 
+                    Idee und wir setzen sie gemeinsam um! 💎
+                </p>
+            </div>
+        </div>
+
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>💜 Mit Herzblut gemacht</h2>
+                <p>
+                    Jedes Stück wird von mir handgefertigt – mit viel 
+                    Liebe zum Detail und deiner ganz persönlichen Note. 
+                    Kein Massenprodukt, sondern ein echtes Unikat!
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Auftrags-Sektion -->
+    <section class="order-section">
+        <div class="order-box fade-in">
+            <h2>🎁 Auftragsarbeit anfragen</h2>
+            <p>
+                Du möchtest ein individuelles Epoxidharz-Kunstwerk? Kein Problem! 
+                Schreib mir einfach eine E-Mail mit deinen Wünschen:
+            </p>
+            
+            <div class="order-features">
+                <div class="feature">
+                    <span class="feature-icon">🎨</span>
+                    <span class="feature-text">Deine Wunschfarben</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">📏</span>
+                    <span class="feature-text">Gewünschte Größe</span>
+                </div>
+                <div class="feature">
+                    <span class="feature-icon">💡</span>
+                    <span class="feature-text">Deine Idee / Motiv</span>
+                </div>
+            </div>
+
+            <a href="mailto:Kerni_Kreativ_@outlook.de?subject=Auftragsarbeit%20Epoxidharz&body=Hallo%20Florian,%0D%0A%0D%0Aich%20interessiere%20mich%20für%20eine%20Epoxidharz-Auftragsarbeit.%0D%0A%0D%0AMeine%20Wünsche:%0D%0A-%20Farben:%20%0D%0A-%20Größe:%20%0D%0A-%20Idee/Motiv:%20%0D%0A%0D%0AViele%20Grüße" class="order-btn">
+                📧 Anfrage per E-Mail senden
+            </a>
+
+            <p class="order-note">
+                <em>Ich melde mich so schnell wie möglich bei dir zurück! 💜</em>
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA TikTok -->
+    <section class="cards" style="grid-template-columns: 1fr; max-width: 800px;">
+        <div class="card-wrapper fade-in">
+            <div class="card" style="text-align: center;">
+                <h2>📱 Beispiele auf TikTok!</h2>
+                <p>
+                    Schau dir auf TikTok an, was alles möglich ist! 
+                    Vielleicht findest du dort Inspiration für dein 
+                    eigenes Projekt. ✨
+                </p>
+                <a href="https://vm.tiktok.com/ZGd9by2u6/" target="_blank" class="tiktok-btn">📱 Zu meinem TikTok</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">© <span id="year"></span> KerniiTV_97 – Alle Rechte vorbehalten</p>
+            <div class="footer-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+                <a href="#" onclick="revokeCookieConsent(); return false;">🍪 Cookie-Einstellungen</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+    <script src="navigation.js"></script>
+    <script src="cookie-banner.js"></script>
+
+</body>
+</html>

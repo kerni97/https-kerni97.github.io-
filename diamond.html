@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diamond Painting - KerniiTV_97</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cookie-banner.css">
+</head>
+
+<body class="diamond-bg">  
+
+    <!-- Navigation wird automatisch geladen -->
+    <div id="navigation-placeholder"></div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>💎 <span>Diamond Painting</span></h1>
+        <p>Kunstwerk Stein für Stein – Meine kreative Auszeit</p>
+        <p class="hero-info">✨ Meditativ &nbsp;•&nbsp; 🎨 Kreativ &nbsp;•&nbsp; 💜 Mit Herzblut</p>
+    </section>
+
+    <!-- Info Karten -->
+    <section class="cards">
+
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>💎 Was ist Diamond Painting?</h2>
+                <p>
+                    Diamond Painting ist eine kreative Bastel-Technik, bei der 
+                    kleine glitzernde "Steine" (Diamonds) nach einem Farbcode auf 
+                    eine klebende Leinwand gesetzt werden. Am Ende entsteht ein 
+                    funkelndes Kunstwerk – Pixel für Pixel, Stein für Stein! ✨
+                </p>
+            </div>
+        </div>
+
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>🧘 Meine kreative Auszeit</h2>
+                <p>
+                    Für mich ist Diamond Painting der perfekte Ausgleich zum 
+                    stressigen Alltag. Es ist fast schon meditativ – ich kann 
+                    komplett abschalten und mich in die Farben und das Glitzern 
+                    verlieren. Der Chat quatscht dabei mit mir, und die Zeit 
+                    vergeht wie im Flug! 💜
+                </p>
+            </div>
+        </div>
+
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>📺 Live im Stream</h2>
+                <p>
+                    Regelmäßig nehme ich euch mit ins Diamond Painting im Stream! 
+                    Zusammen quatschen wir, hören Musik und ich zeige euch, wie 
+                    ein neues Kunstwerk entsteht. Schau vorbei bei Twitch – ich 
+                    freu mich auf dich! 🎮
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- CTA - Nur Twitch -->
+    <section class="cards" style="grid-template-columns: 1fr; max-width: 800px;">
+        <div class="card-wrapper fade-in">
+            <div class="card" style="text-align: center;">
+                <h2>💜 Schau live zu!</h2>
+                <p>
+                    Möchtest du sehen, wie ein Diamond Painting entsteht? 
+                    Dann komm doch mal bei mir auf Twitch vorbei!
+                </p>
+                <a href="https://twitch.tv/kerniitv_97" target="_blank" class="cta-btn">🎮 Zu meinem Twitch-Kanal</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">© <span id="year"></span> KerniiTV_97 – Alle Rechte vorbehalten</p>
+            <div class="footer-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+                <a href="#" onclick="revokeCookieConsent(); return false;">🍪 Cookie-Einstellungen</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== COOKIE BANNER START ========== -->
+    <div id="ktvCookieBanner" class="ktv-cookie-banner" role="dialog">
+        <div class="ktv-cookie-content">
+            <div class="ktv-cookie-icon">🍪</div>
+            <div class="ktv-cookie-text">
+                <h3>Cookies & Datenschutz</h3>
+                <p>
+                    Diese Website verwendet Cookies, um dir das beste Erlebnis zu bieten. 
+                    Einige sind technisch notwendig, andere helfen uns die Seite zu verbessern. 
+                    <a href="datenschutz.html" class="ktv-cookie-link">Mehr erfahren</a>
+                </p>
+            </div>
+            <div class="ktv-cookie-buttons">
+                <button class="ktv-cookie-btn ktv-cookie-btn-settings" onclick="openCookieSettings()">
+                    ⚙️ Einstellungen
+                </button>
+                <button class="ktv-cookie-btn ktv-cookie-btn-decline" onclick="declineCookies()">
+                    Nur Notwendige
+                </button>
+                <button class="ktv-cookie-btn ktv-cookie-btn-accept" onclick="acceptAllCookies()">
+                    Alle akzeptieren
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ktvCookieSettings" class="ktv-cookie-settings-modal">
+        <div class="ktv-cookie-settings-content">
+            <div class="ktv-cookie-settings-header">
+                <h2>🍪 Cookie-Einstellungen</h2>
+                <button class="ktv-cookie-close" onclick="closeCookieSettings()">✕</button>
+            </div>
+            
+            <div class="ktv-cookie-settings-body">
+                <p class="ktv-cookie-settings-intro">
+                    Du kannst hier auswählen, welche Cookies du zulassen möchtest.
+                </p>
+
+                <div class="ktv-cookie-category">
+                    <div class="ktv-cookie-category-header">
+                        <div>
+                            <h3>Notwendige Cookies</h3>
+                            <p>Diese Cookies sind für die Grundfunktionen der Website erforderlich.</p>
+                        </div>
+                        <label class="ktv-cookie-switch">
+                            <input type="checkbox" checked disabled>
+                            <span class="ktv-cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="ktv-cookie-category">
+                    <div class="ktv-cookie-category-header">
+                        <div>
+                            <h3>Analyse Cookies</h3>
+                            <p>Helfen uns zu verstehen, wie Besucher die Website nutzen.</p>
+                        </div>
+                        <label class="ktv-cookie-switch">
+                            <input type="checkbox" id="ktvAnalyticsCookies">
+                            <span class="ktv-cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="ktv-cookie-category">
+                    <div class="ktv-cookie-category-header">
+                        <div>
+                            <h3>Marketing Cookies</h3>
+                            <p>Werden verwendet, um Inhalte relevanter zu gestalten.</p>
+                        </div>
+                        <label class="ktv-cookie-switch">
+                            <input type="checkbox" id="ktvMarketingCookies">
+                            <span class="ktv-cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ktv-cookie-settings-footer">
+                <button class="ktv-cookie-btn ktv-cookie-btn-decline" onclick="declineCookies()">
+                    Alle ablehnen
+                </button>
+                <button class="ktv-cookie-btn ktv-cookie-btn-accept" onclick="saveCookieSettings()">
+                    Auswahl speichern
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ========== COOKIE BANNER END ========== -->
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+    <script src="navigation.js"></script>
+    <script src="cookie-banner.js"></script>
+
+</body>
+</html>

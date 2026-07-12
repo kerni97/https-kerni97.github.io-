@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kunden-Werke Diamond Painting - KerniiTV_97</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cookie-banner.css">
+</head>
+
+<body class="diamond-bg">  
+
+    <div id="navigation-placeholder"></div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>🎨 <span>Kunden-Werke</span></h1>
+        <p>Diamond Paintings, die ich für meine Kunden fertiggestellt habe</p>
+        <p class="hero-info">💎 Handgemacht &nbsp;•&nbsp; 💜 Mit Liebe &nbsp;•&nbsp; ✨ Individuell</p>
+    </section>
+
+    <!-- Info-Box -->
+    <section class="order-section">
+        <div class="order-box fade-in">
+            <h2>💜 Bereits umgesetzte Aufträge</h2>
+            <p>
+                Hier siehst du eine Auswahl an Diamond Paintings, die ich schon für 
+                meine Kunden fertiggestellt habe. Jedes Werk ist einzigartig und 
+                mit viel Geduld & Herzblut entstanden. Vielleicht ist ja auch dein 
+                Wunsch-Motiv bald hier zu sehen! ✨
+            </p>
+        </div>
+    </section>
+
+    <!-- Galerie der Kunden-Werke -->
+    <section class="gallery-section">
+        <h2 class="section-title">🖼️ Fertige Auftragsarbeiten</h2>
+        <p class="section-subtitle">Klick auf ein Werk für mehr Infos</p>
+
+        <div class="gallery-grid">
+
+            <!-- BEISPIEL - Ersetze die Bilder & Texte mit echten Kundenwerken -->
+            
+            <div class="gallery-item fade-in">
+                <div class="gallery-image">
+                    <img src="bilder/kunde1.jpg" alt="Kundenwerk 1">
+                </div>
+                <div class="gallery-info">
+                    <h3>Kundenwerk 1</h3>
+                    <p>Beschreibung / Motiv</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <div class="gallery-image">
+                    <img src="bilder/kunde2.jpg" alt="Kundenwerk 2">
+                </div>
+                <div class="gallery-info">
+                    <h3>Kundenwerk 2</h3>
+                    <p>Beschreibung / Motiv</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <div class="gallery-image">
+                    <img src="bilder/kunde3.jpg" alt="Kundenwerk 3">
+                </div>
+                <div class="gallery-info">
+                    <h3>Kundenwerk 3</h3>
+                    <p>Beschreibung / Motiv</p>
+                </div>
+            </div>
+
+        </div>
+
+        <p class="gallery-note">
+            📸 <em>Bald folgen weitere fertige Kunden-Werke!</em>
+        </p>
+    </section>
+
+    <!-- CTA Auftrag anfragen -->
+    <section class="cards" style="grid-template-columns: 1fr; max-width: 800px;">
+        <div class="card-wrapper fade-in">
+            <div class="card" style="text-align: center;">
+                <h2>✨ Auch Interesse an einem eigenen Werk?</h2>
+                <p>
+                    Möchtest du auch dein persönliches Diamond Painting? 
+                    Ob mit deinem eigenen Foto oder ein fertigzustellendes 
+                    gekauftes Set – schreib mir einfach!
+                </p>
+                <a href="diamond-auftrag.html" class="cta-btn">📧 Zum Auftragsbereich</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">© <span id="year"></span> KerniiTV_97 – Alle Rechte vorbehalten</p>
+            <div class="footer-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+                <a href="#" onclick="revokeCookieConsent(); return false;">🍪 Cookie-Einstellungen</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+    <script src="navigation.js"></script>
+    <script src="cookie-banner.js"></script>
+
+</body>
+</html>

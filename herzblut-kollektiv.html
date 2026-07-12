@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Herzblut Kollektiv - KerniiTV_97</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cookie-banner.css">
+</head>
+
+<body class="herzblut-bg">   
+
+    <!-- Navigation wird automatisch geladen -->
+    <div id="navigation-placeholder"></div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>💖 <span>Herzblut Kollektiv</span></h1>
+        <p>Streamer die ich unterstütze und weiterempfehle</p>
+        <p class="hero-info">💜 Meine Empfehlungen &nbsp;•&nbsp; 🤝 Mit Herz &nbsp;•&nbsp; ❤️ Persönlich ausgewählt</p>
+    </section>
+
+    <!-- Info Karte Groß -->
+    <section class="cards" style="grid-template-columns: 1fr; max-width: 900px;">
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>💖 Was ist das Herzblut Kollektiv?</h2>
+                <p>
+                    Das <strong>Herzblut Kollektiv</strong> ist meine persönliche 
+                    Sammlung an <strong>Streamerinnen und Streamern, die ich von Herzen 
+                    unterstütze und euch ans Herz legen möchte</strong>. Es sind Menschen, 
+                    die mir wichtig sind – sei es weil ich ihre Streams liebe, weil wir 
+                    zusammen quatschen, oder weil einfach die Chemie stimmt! 💜
+                </p>
+                <p>
+                    Ich möchte diese tollen Kanäle mit euch teilen, damit auch ihr sie 
+                    entdecken könnt. Jeder von ihnen macht auf seine eigene Art 
+                    besonderen Content – und alle haben eines gemeinsam: <strong>Sie 
+                    streamen mit Herzblut!</strong> ❤️
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Info Karten - 3 nebeneinander -->
+    <section class="cards">
+
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>🤝 Warum diese Streamer?</h2>
+                <p>
+                    Alle Streamer in meinem Herzblut Kollektiv habe ich 
+                    <strong>persönlich ausgewählt</strong>. Es sind keine großen 
+                    Werbepartner oder bezahlte Empfehlungen – es sind Menschen, 
+                    deren Content mich begeistert, die eine schöne Community 
+                    aufgebaut haben und die ich einfach gerne unterstütze! 💜
+                </p>
+            </div>
+        </div>
+
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>💜 So kannst du unterstützen</h2>
+                <p>
+                    Schau doch mal bei den Streamern vorbei und unterstütze sie! 
+                    <strong>Jeder Weg zählt</strong> – ob aktiv im Chat oder 
+                    einfach nur zuschauen:
+                </p>
+                <ul class="herzblut-list">
+                    <li>👀 Zuschauen</li>
+                    <li>💬 Chatten</li>
+                    <li>💜 Support (Subs, Bits, Donations)</li>
+                    <li>🌙 Lurken (auch das hilft!)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>❤️ Bunte Vielfalt</h2>
+                <p>
+                    Von Gaming über IRL bis hin zu Kreativ-Content – die Streamer 
+                    in meinem Kollektiv sind <strong>so vielfältig wie das Leben 
+                    selbst</strong>! Da ist bestimmt auch etwas für dich dabei. 
+                    Klick dich einfach mal durch und lass dich überraschen! ✨
+                </p>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Info Karte - Zu den Streamern -->
+    <section class="cards" style="grid-template-columns: 1fr; max-width: 900px;">
+        <div class="card-wrapper fade-in">
+            <div class="card">
+                <h2>🎮 Entdecke meine Empfehlungen</h2>
+                <p>
+                    Neugierig geworden? Dann klick oben im Menü auf 
+                    <strong>"Herzblut Kollektiv → Streamer"</strong>. Dort findest 
+                    du alle Kanäle mit Live-Status, Follower-Anzahl und direkten 
+                    Links zu ihren Twitch-Streams! 🎮💜
+                </p>
+                <p>
+                    <em>Vielleicht findest du ja deinen neuen Lieblingsstreamer! ✨</em>
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">© <span id="year"></span> KerniiTV_97 – Alle Rechte vorbehalten</p>
+            <div class="footer-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+                <a href="#" onclick="revokeCookieConsent(); return false;">🍪 Cookie-Einstellungen</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== COOKIE BANNER START ========== -->
+    <div id="ktvCookieBanner" class="ktv-cookie-banner" role="dialog">
+        <div class="ktv-cookie-content">
+            <div class="ktv-cookie-icon">🍪</div>
+            <div class="ktv-cookie-text">
+                <h3>Cookies & Datenschutz</h3>
+                <p>
+                    Diese Website verwendet Cookies, um dir das beste Erlebnis zu bieten. 
+                    Einige sind technisch notwendig, andere helfen uns die Seite zu verbessern. 
+                    <a href="datenschutz.html" class="ktv-cookie-link">Mehr erfahren</a>
+                </p>
+            </div>
+            <div class="ktv-cookie-buttons">
+                <button class="ktv-cookie-btn ktv-cookie-btn-settings" onclick="openCookieSettings()">
+                    ⚙️ Einstellungen
+                </button>
+                <button class="ktv-cookie-btn ktv-cookie-btn-decline" onclick="declineCookies()">
+                    Nur Notwendige
+                </button>
+                <button class="ktv-cookie-btn ktv-cookie-btn-accept" onclick="acceptAllCookies()">
+                    Alle akzeptieren
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ktvCookieSettings" class="ktv-cookie-settings-modal">
+        <div class="ktv-cookie-settings-content">
+            <div class="ktv-cookie-settings-header">
+                <h2>🍪 Cookie-Einstellungen</h2>
+                <button class="ktv-cookie-close" onclick="closeCookieSettings()">✕</button>
+            </div>
+            
+            <div class="ktv-cookie-settings-body">
+                <p class="ktv-cookie-settings-intro">
+                    Du kannst hier auswählen, welche Cookies du zulassen möchtest.
+                </p>
+
+                <div class="ktv-cookie-category">
+                    <div class="ktv-cookie-category-header">
+                        <div>
+                            <h3>Notwendige Cookies</h3>
+                            <p>Diese Cookies sind für die Grundfunktionen der Website erforderlich.</p>
+                        </div>
+                        <label class="ktv-cookie-switch">
+                            <input type="checkbox" checked disabled>
+                            <span class="ktv-cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="ktv-cookie-category">
+                    <div class="ktv-cookie-category-header">
+                        <div>
+                            <h3>Analyse Cookies</h3>
+                            <p>Helfen uns zu verstehen, wie Besucher die Website nutzen.</p>
+                        </div>
+                        <label class="ktv-cookie-switch">
+                            <input type="checkbox" id="ktvAnalyticsCookies">
+                            <span class="ktv-cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="ktv-cookie-category">
+                    <div class="ktv-cookie-category-header">
+                        <div>
+                            <h3>Marketing Cookies</h3>
+                            <p>Werden verwendet, um Inhalte relevanter zu gestalten.</p>
+                        </div>
+                        <label class="ktv-cookie-switch">
+                            <input type="checkbox" id="ktvMarketingCookies">
+                            <span class="ktv-cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ktv-cookie-settings-footer">
+                <button class="ktv-cookie-btn ktv-cookie-btn-decline" onclick="declineCookies()">
+                    Alle ablehnen
+                </button>
+                <button class="ktv-cookie-btn ktv-cookie-btn-accept" onclick="saveCookieSettings()">
+                    Auswahl speichern
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ========== COOKIE BANNER END ========== -->
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+    <script src="navigation.js"></script>
+    <script src="cookie-banner.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - Epoxidharz Werke - KerniiTV_97</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cookie-banner.css">
+</head>
+
+<body class="epoxid-bg">  
+
+    <!-- Navigation wird automatisch geladen -->
+    <div id="navigation-placeholder"></div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>🛒 <span>Meine Werke zu verkaufen</span></h1>
+        <p>Handgemachte Epoxidharz-Unikate – Direkt vom Künstler</p>
+        <p class="hero-info">💎 Handgefertigt &nbsp;•&nbsp; ✨ Einzigartig &nbsp;•&nbsp; 💜 Mit Herzblut</p>
+    </section>
+
+    <!-- Info-Boxen -->
+    <section class="shop-info">
+        <div class="info-box fade-in">
+            <div class="info-icon">🎨</div>
+            <h3>Handgefertigt</h3>
+            <p>Jedes Werk wird von mir persönlich mit Liebe gegossen</p>
+        </div>
+        <div class="info-box fade-in">
+            <div class="info-icon">💎</div>
+            <h3>Einzigartig</h3>
+            <p>Kein Werk gleicht dem anderen – jedes ist ein Unikat</p>
+        </div>
+        <div class="info-box fade-in">
+            <div class="info-icon">📦</div>
+            <h3>Versand & Abholung</h3>
+            <p>Details klären wir gerne individuell per Nachricht</p>
+        </div>
+        <div class="info-box fade-in">
+            <div class="info-icon">💜</div>
+            <h3>Auf Wunsch</h3>
+            <p>Individuelle Auftragsarbeiten sind jederzeit möglich!</p>
+        </div>
+    </section>
+
+    <!-- Filter Buttons -->
+    <div class="shop-filter">
+        <button class="filter-btn active" onclick="filterProducts('all')">🌟 Alle</button>
+        <button class="filter-btn" onclick="filterProducts('teelicht')">🕯️ Teelichter</button>
+        <button class="filter-btn" onclick="filterProducts('deko')">🎨 Deko</button>
+        <button class="filter-btn" onclick="filterProducts('bad')">🛁 Bad</button>
+        <button class="filter-btn" onclick="filterProducts('sonstiges')">✨ Sonstiges</button>
+    </div>
+
+    <!-- Shop Grid -->
+    <section class="shop-grid">
+
+        <!-- Produkt 1 - Verfügbar -->
+        <div class="product-card fade-in" data-category="deko">
+            <span class="product-badge badge-available">🟢 Verfügbar</span>
+            <div class="product-image">
+                <img src="epoxid/epoxid1.jpg" alt="Katze mit Blume">
+            </div>
+            <div class="product-info">
+                <p class="product-category">Deko</p>
+                <h3 class="product-title">Katze mit Blume</h3>
+                <p class="product-description">
+                    Wunderschöne handgegossene Katzen-Figur mit filigranen Blumen-Details. 
+                    Ein echter Hingucker für dein Zuhause!
+                </p>
+                <div class="product-price">35,00 €</div>
+                <a href="mailto:Kerni_Kreativ_@outlook.de?subject=Anfrage:%20Katze%20mit%20Blume&body=Hallo%20Florian,%0D%0A%0D%0Aich%20interessiere%20mich%20für%20das%20Werk%20'Katze%20mit%20Blume'.%0D%0A%0D%0AViele%20Grüße" class="product-btn">
+                    📧 Jetzt anfragen
+                </a>
+            </div>
+        </div>
+
+        <!-- Produkt 2 - Verfügbar -->
+        <div class="product-card fade-in" data-category="teelicht">
+            <span class="product-badge badge-available">🟢 Verfügbar</span>
+            <div class="product-image">
+                <img src="epoxid/epoxid2.jpg" alt="Stern Teelicht">
+            </div>
+            <div class="product-info">
+                <p class="product-category">Teelicht</p>
+                <h3 class="product-title">Stern Teelicht</h3>
+                <p class="product-description">
+                    Zauberhaftes Teelicht in Sternform. Verwandelt jeden Raum in eine 
+                    stimmungsvolle Wohlfühl-Oase.
+                </p>
+                <div class="product-price">15,00 €</div>
+                <a href="mailto:Kerni_Kreativ_@outlook.de?subject=Anfrage:%20Stern%20Teelicht&body=Hallo%20Florian,%0D%0A%0D%0Aich%20interessiere%20mich%20für%20das%20Werk%20'Stern%20Teelicht'.%0D%0A%0D%0AViele%20Grüße" class="product-btn">
+                    📧 Jetzt anfragen
+                </a>
+            </div>
+        </div>
+
+        <!-- Produkt 3 - Auf Anfrage -->
+        <div class="product-card fade-in" data-category="teelicht">
+            <span class="product-badge badge-request">🟡 Auf Anfrage</span>
+            <div class="product-image">
+                <img src="epoxid/epoxid3.jpg" alt="Teelicht Flocke">
+            </div>
+            <div class="product-info">
+                <p class="product-category">Teelicht</p>
+                <h3 class="product-title">Teelicht Schneeflocke</h3>
+                <p class="product-description">
+                    Elegantes Schneeflocken-Teelicht – perfekt für die kalte Jahreszeit 
+                    oder als besonderes Geschenk.
+                </p>
+                <div class="product-price">ab 18,00 € <small>(individuell)</small></div>
+                <a href="mailto:Kerni_Kreativ_@outlook.de?subject=Anfrage:%20Teelicht%20Schneeflocke&body=Hallo%20Florian,%0D%0A%0D%0Aich%20interessiere%20mich%20für%20das%20Werk%20'Teelicht%20Schneeflocke'.%0D%0A%0D%0AMeine%20Wünsche:%0D%0A-%20Farbe:%20%0D%0A-%20Menge:%20%0D%0A%0D%0AViele%20Grüße" class="product-btn">
+                    📧 Individuell anfragen
+                </a>
+            </div>
+        </div>
+
+        <!-- Produkt 4 - Nicht Verfügbar (BEISPIEL) -->
+        <div class="product-card fade-in sold-out" data-category="bad">
+            <span class="product-badge badge-sold">🔴 Nicht Verfügbar</span>
+            <div class="product-image">
+                <img src="epoxid/epoxid4.jpg" alt="Seifenspender">
+            </div>
+            <div class="product-info">
+                <p class="product-category">Badezimmer</p>
+                <h3 class="product-title">Designer Seifenspender</h3>
+                <p class="product-description">
+                    Eleganter Seifenspender in edlem Epoxidharz-Design. 
+                    Macht dein Bad zum absoluten Blickfang!
+                </p>
+                <div class="product-price">45,00 €</div>
+                <a href="mailto:Kerni_Kreativ_@outlook.de?subject=Nachbestellung:%20Designer%20Seifenspender&body=Hallo%20Florian,%0D%0A%0D%0Aich%20interessiere%20mich%20für%20eine%20Nachbestellung%20des%20'Designer%20Seifenspender'.%0D%0A%0D%0AViele%20Grüße" class="product-btn btn-disabled">
+                    📧 Nachbestellung anfragen
+                </a>
+            </div>
+        </div>
+
+        <!-- Produkt 5 - Verfügbar -->
+        <div class="product-card fade-in" data-category="teelicht">
+            <span class="product-badge badge-available">🟢 Verfügbar</span>
+            <div class="product-image">
+                <img src="epoxid/epoxid5.jpg" alt="Teelicht Blatt">
+            </div>
+            <div class="product-info">
+                <p class="product-category">Teelicht</p>
+                <h3 class="product-title">Teelicht Blatt</h3>
+                <p class="product-description">
+                    Naturinspiriertes Blatt-Teelicht mit filigranen Details. 
+                    Bringt einen Hauch von Natur in dein Zuhause.
+                </p>
+                <div class="product-price">25,00 €</div>
+                <a href="mailto:Kerni_Kreativ_@outlook.de?subject=Anfrage:%20Teelicht%20Blatt&body=Hallo%20Florian,%0D%0A%0D%0Aich%20interessiere%20mich%20für%20das%20Werk%20'Teelicht%20Blatt'.%0D%0A%0D%0AViele%20Grüße" class="product-btn">
+                    📧 Jetzt anfragen
+                </a>
+            </div>
+        </div>
+
+        <!-- Produkt 6 - Auf Anfrage -->
+        <div class="product-card fade-in" data-category="sonstiges">
+            <span class="product-badge badge-request">🟡 Auf Anfrage</span>
+            <div class="product-image">
+                <img src="epoxid/epoxid6.jpg" alt="Engel">
+            </div>
+            <div class="product-info">
+                <p class="product-category">Sonstiges</p>
+                <h3 class="product-title">Schutzengel</h3>
+                <p class="product-description">
+                    Zauberhafter Schutzengel aus glänzendem Epoxidharz. 
+                    Ein wunderschönes Geschenk oder Andenken.
+                </p>
+                <div class="product-price">Preis auf Anfrage</div>
+                <a href="mailto:Kerni_Kreativ_@outlook.de?subject=Anfrage:%20Schutzengel&body=Hallo%20Florian,%0D%0A%0D%0Aich%20interessiere%20mich%20für%20den%20Schutzengel.%0D%0A%0D%0AMeine%20Wünsche:%0D%0A-%20Farbe:%20%0D%0A-%20Größe:%20%0D%0A%0D%0AViele%20Grüße" class="product-btn">
+                    📧 Individuell anfragen
+                </a>
+            </div>
+        </div>
+
+    </section>
+
+    <!-- Kontaktformular -->
+    <section class="contact-form-section">
+        <div class="contact-form-box fade-in">
+            <h2>📩 Direkte Anfrage</h2>
+            <p class="form-intro">
+                Du hast Interesse an einem Werk oder möchtest eine individuelle 
+                Auftragsarbeit? Schreib mir eine Nachricht!
+            </p>
+
+            <form id="contactForm" onsubmit="sendContactForm(event)">
+                <div class="form-group">
+                    <label for="name">👤 Dein Name</label>
+                    <input type="text" id="name" name="name" placeholder="Max Mustermann" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">📧 Deine E-Mail</label>
+                    <input type="email" id="email" name="email" placeholder="deine@email.de" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="produkt">🎨 Welches Werk interessiert dich?</label>
+                    <select id="produkt" name="produkt" required>
+                        <option value="">-- Bitte wählen --</option>
+                        <option value="Katze mit Blume">Katze mit Blume</option>
+                        <option value="Stern Teelicht">Stern Teelicht</option>
+                        <option value="Teelicht Schneeflocke">Teelicht Schneeflocke</option>
+                        <option value="Designer Seifenspender">Designer Seifenspender (Nachbestellung)</option>
+                        <option value="Teelicht Blatt">Teelicht Blatt</option>
+                        <option value="Schutzengel">Schutzengel</option>
+                        <option value="Individuelle Auftragsarbeit">Individuelle Auftragsarbeit</option>
+                        <option value="Allgemeine Anfrage">Allgemeine Anfrage</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="nachricht">💬 Deine Nachricht</label>
+                    <textarea id="nachricht" name="nachricht" placeholder="Erzähl mir von deinen Wünschen..." required></textarea>
+                </div>
+
+                <button type="submit" class="form-submit">
+                    ✉️ Anfrage senden
+                </button>
+            </form>
+
+            <div class="form-alternative">
+                📞 Lieber direkt per E-Mail? Kein Problem!<br>
+                Schreib mir an: <a href="mailto:Kerni_Kreativ_@outlook.de">Kerni_Kreativ_@outlook.de</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">© <span id="year"></span> KerniiTV_97 – Alle Rechte vorbehalten</p>
+            <div class="footer-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+                <a href="#" onclick="revokeCookieConsent(); return false;">🍪 Cookie-Einstellungen</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- ========== COOKIE BANNER START ========== -->
+    <div id="ktvCookieBanner" class="ktv-cookie-banner" role="dialog">
+        <div class="ktv-cookie-content">
+            <div class="ktv-cookie-icon">🍪</div>
+            <div class="ktv-cookie-text">
+                <h3>Cookies & Datenschutz</h3>
+                <p>
+                    Diese Website verwendet Cookies, um dir das beste Erlebnis zu bieten. 
+                    Einige sind technisch notwendig, andere helfen uns die Seite zu verbessern. 
+                    <a href="datenschutz.html" class="ktv-cookie-link">Mehr erfahren</a>
+                </p>
+            </div>
+            <div class="ktv-cookie-buttons">
+                <button class="ktv-cookie-btn ktv-cookie-btn-settings" onclick="openCookieSettings()">
+                    ⚙️ Einstellungen
+                </button>
+                <button class="ktv-cookie-btn ktv-cookie-btn-decline" onclick="declineCookies()">
+                    Nur Notwendige
+                </button>
+                <button class="ktv-cookie-btn ktv-cookie-btn-accept" onclick="acceptAllCookies()">
+                    Alle akzeptieren
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="ktvCookieSettings" class="ktv-cookie-settings-modal">
+        <div class="ktv-cookie-settings-content">
+            <div class="ktv-cookie-settings-header">
+                <h2>🍪 Cookie-Einstellungen</h2>
+                <button class="ktv-cookie-close" onclick="closeCookieSettings()">✕</button>
+            </div>
+            
+            <div class="ktv-cookie-settings-body">
+                <p class="ktv-cookie-settings-intro">
+                    Du kannst hier auswählen, welche Cookies du zulassen möchtest.
+                </p>
+
+                <div class="ktv-cookie-category">
+                    <div class="ktv-cookie-category-header">
+                        <div>
+                            <h3>Notwendige Cookies</h3>
+                            <p>Diese Cookies sind für die Grundfunktionen der Website erforderlich.</p>
+                        </div>
+                        <label class="ktv-cookie-switch">
+                            <input type="checkbox" checked disabled>
+                            <span class="ktv-cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="ktv-cookie-category">
+                    <div class="ktv-cookie-category-header">
+                        <div>
+                            <h3>Analyse Cookies</h3>
+                            <p>Helfen uns zu verstehen, wie Besucher die Website nutzen.</p>
+                        </div>
+                        <label class="ktv-cookie-switch">
+                            <input type="checkbox" id="ktvAnalyticsCookies">
+                            <span class="ktv-cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="ktv-cookie-category">
+                    <div class="ktv-cookie-category-header">
+                        <div>
+                            <h3>Marketing Cookies</h3>
+                            <p>Werden verwendet, um Inhalte relevanter zu gestalten.</p>
+                        </div>
+                        <label class="ktv-cookie-switch">
+                            <input type="checkbox" id="ktvMarketingCookies">
+                            <span class="ktv-cookie-slider"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ktv-cookie-settings-footer">
+                <button class="ktv-cookie-btn ktv-cookie-btn-decline" onclick="declineCookies()">
+                    Alle ablehnen
+                </button>
+                <button class="ktv-cookie-btn ktv-cookie-btn-accept" onclick="saveCookieSettings()">
+                    Auswahl speichern
+                </button>
+            </div>
+        </div>
+    </div>
+    <!-- ========== COOKIE BANNER END ========== -->
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+        function filterProducts(category) {
+            const products = document.querySelectorAll('.product-card');
+            const buttons = document.querySelectorAll('.filter-btn');
+            
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            products.forEach(product => {
+                if (category === 'all') {
+                    product.style.display = 'flex';
+                } else {
+                    if (product.getAttribute('data-category') === category) {
+                        product.style.display = 'flex';
+                    } else {
+                        product.style.display = 'none';
+                    }
+                }
+            });
+        }
+
+        function sendContactForm(event) {
+            event.preventDefault();
+            
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const produkt = document.getElementById('produkt').value;
+            const nachricht = document.getElementById('nachricht').value;
+            
+            const subject = encodeURIComponent(`Shop-Anfrage: ${produkt}`);
+            const body = encodeURIComponent(
+                `Hallo Florian,\n\n` +
+                `hier meine Anfrage zu deinem Werk:\n\n` +
+                `👤 Name: ${name}\n` +
+                `📧 E-Mail: ${email}\n` +
+                `🎨 Werk: ${produkt}\n\n` +
+                `💬 Nachricht:\n${nachricht}\n\n` +
+                `Viele Grüße,\n${name}`
+            );
+            
+            window.location.href = `mailto:Kerni_Kreativ_@outlook.de?subject=${subject}&body=${body}`;
+        }
+    </script>
+
+    <!-- Navigation Script (lädt Navigation automatisch) -->
+    <script src="navigation.js"></script>
+
+    <!-- Cookie Banner Script -->
+    <script src="cookie-banner.js"></script>
+
+</body>
+</html>

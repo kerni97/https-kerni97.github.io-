@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meine Epoxidharz Werke - KerniiTV_97</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cookie-banner.css">
+</head>
+
+<body class="epoxid-bg">  
+
+    <div id="navigation-placeholder"></div>
+
+    <!-- Hero -->
+    <section class="hero">
+        <h1>🖼️ <span>Meine Werke</span></h1>
+        <p>Meine fertigen Epoxidharz-Kunstwerke</p>
+        <p class="hero-info">💎 Handgemacht &nbsp;•&nbsp; 💜 Mit Herzblut &nbsp;•&nbsp; ✨ Einzigartig</p>
+    </section>
+
+    <!-- Galerie -->
+    <section class="gallery-section">
+        <h2 class="section-title">🖼️ Meine Werke</h2>
+        <p class="section-subtitle">Eine kleine Auswahl meiner Epoxidharz-Kreationen</p>
+
+        <div class="gallery-grid">
+
+            <div class="gallery-item fade-in">
+                <div class="gallery-image">
+                    <img src="epoxid/epoxid1.jpg" alt="Katze mit Blume">
+                </div>
+                <div class="gallery-info">
+                    <h3>Katze mit Blume</h3>
+                    <p>Katze mit Blume</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <div class="gallery-image">
+                    <img src="epoxid/epoxid2.jpg" alt="Stern Teelicht">
+                </div>
+                <div class="gallery-info">
+                    <h3>Stern Teelicht</h3>
+                    <p>Stern Teelicht</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <div class="gallery-image">
+                    <img src="epoxid/epoxid3.jpg" alt="Teelicht Flocke">
+                </div>
+                <div class="gallery-info">
+                    <h3>Teelicht Flocke</h3>
+                    <p>Teelicht Flocke</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <div class="gallery-image">
+                    <img src="epoxid/epoxid4.jpg" alt="Seifenspender">
+                </div>
+                <div class="gallery-info">
+                    <h3>Seifenspender</h3>
+                    <p>Seifenspender</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <div class="gallery-image">
+                    <img src="epoxid/epoxid5.jpg" alt="Teelicht Blatt">
+                </div>
+                <div class="gallery-info">
+                    <h3>Teelicht Blatt</h3>
+                    <p>Teelicht Blatt</p>
+                </div>
+            </div>
+
+            <div class="gallery-item fade-in">
+                <div class="gallery-image">
+                    <img src="epoxid/epoxid6.jpg" alt="Engel">
+                </div>
+                <div class="gallery-info">
+                    <h3>Engel</h3>
+                    <p>Engel</p>
+                </div>
+            </div>
+
+        </div>
+
+        <p class="gallery-note">
+            📸 <em>Bald folgen weitere Fotos meiner Werke!</em>
+        </p>
+    </section>
+
+    <!-- CTA TikTok -->
+    <section class="cards" style="grid-template-columns: 1fr; max-width: 800px;">
+        <div class="card-wrapper fade-in">
+            <div class="card" style="text-align: center;">
+                <h2>📱 Mehr auf TikTok!</h2>
+                <p>
+                    Meine Epoxidharz-Werke zeige ich regelmäßig auf TikTok! 
+                    Folge mir für coole Einblicke! ✨
+                </p>
+                <a href="https://vm.tiktok.com/ZGd9by2u6/" target="_blank" class="tiktok-btn">📱 Zu meinem TikTok</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <p class="copyright">© <span id="year"></span> KerniiTV_97 – Alle Rechte vorbehalten</p>
+            <div class="footer-links">
+                <a href="impressum.html">Impressum</a>
+                <a href="datenschutz.html">Datenschutz</a>
+                <a href="#" onclick="revokeCookieConsent(); return false;">🍪 Cookie-Einstellungen</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                } else {
+                    entry.target.classList.remove('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
+    <script src="navigation.js"></script>
+    <script src="cookie-banner.js"></script>
+
+</body>
+</html>
