@@ -2,70 +2,74 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>OBS TTS Fix</title>
-    <script src="https://unpkg.com/tmi.js@1.8.5/browser/tmi.min.js"></script>
+    <title>Twitch Debug</title>
+    <script src="https://bundle.run/tmi.js@1.8.5"></script>
     <style>
-        body { background-color: #222; color: white; font-family: sans-serif; text-align: center; }
-        #status { font-size: 20px; color: #00ff00; margin: 20px; padding: 10px; border: 2px solid #00ff00; }
-        button { width: 90%; padding: 30px; font-size: 25px; background: #e67e22; color: white; font-weight: bold; border-radius: 10px; cursor: pointer; }
-        #log { margin-top: 20px; font-family: monospace; text-align: left; padding: 10px; background: #000; height: 150px; overflow: hidden; }
+        body { background: #111; color: white; font-family: sans-serif; padding: 20px; }
+        #status { font-size: 20px; padding: 10px; border: 2px solid #555; text-align: center; }
+        #error-log { color: #ff4444; margin-top: 10px; font-weight: bold; }
+        #chat-log { background: #000; height: 100px; padding: 10px; margin-top: 10px; border: 1px solid #333; overflow: hidden; }
+        button { width: 100%; padding: 20px; background: #e67e22; color: white; border: none; font-size: 1.2rem; cursor: pointer; }
     </style>
 </head>
 <body>
+    <div id="status">Warte auf Start...</div>
+    <div id="error-log"></div>
+    <br>
+    <button onclick="connectTwitch()">1. VERBINDUNG STARTEN</button>
+    <br><br>
+    <button onclick="testAudio()">2. AUDIO TESTEN</button>
 
-    <div id="status">Verbindung wird geprüft...</div>
-    
-    <!-- DIESER BUTTON IST DER SCHLÜSSEL -->
-    <button id="playBtn">KLICK MICH IN OBS (INTERAGIEREN)!</button>
-
-    <div id="log">Chat Log:<br></div>
+    <div id="chat-log">Letzte Nachricht: <br>---</div>
 
     <script>
-        const log = (m) => { document.getElementById('log').innerHTML += m + "<br>"; };
-        const status = document.getElementById('status');
-        const playBtn = document.getElementById('playBtn');
+        const statusDiv = document.getElementById('status');
+        const errorDiv = document.getElementById('error-log');
+        const chatDiv = document.getElementById('chat-log');
+        let audioActive = false;
 
-        let audioReady = false;
-
-        // Funktion zum Sprechen
         function speak(text) {
-            if (!audioReady) {
-                log("Audio nicht bereit! Klicke den Button!");
-                return;
-            }
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'de-DE';
-            window.speechSynthesis.speak(utterance);
-            log("Spreche: " + text);
+            if (!audioActive) return;
+            const ut = new SpeechSynthesisUtterance(text);
+            ut.lang = 'de-DE';
+            window.speechSynthesis.speak(ut);
         }
 
-        // Twitch Verbindung startet SOFORT beim Laden
-        const client = new tmi.Client({
-            channels: [ 'kerniitv_97' ]
-        });
+        function testAudio() {
+            audioActive = true;
+            speak("Audio Test erfolgreich.");
+            statusDiv.innerText = "Audio ist jetzt AKTIV";
+        }
 
-        client.on('message', (channel, tags, message, self) => {
-            log(tags['display-name'] + ": " + message);
-            if (message.toLowerCase().startsWith('!say')) {
-                const text = message.replace('!say', '').trim();
-                speak(tags['display-name'] + " sagt " + text);
-            }
-        });
+        function connectTwitch() {
+            audioActive = true;
+            statusDiv.innerText = "Verbinde zu Twitch...";
+            errorDiv.innerText = "";
 
-        client.connect().then(() => {
-            status.innerText = "✅ VERBUNDEN MIT TWITCH";
-        }).catch(err => {
-            status.innerText = "❌ FEHLER BEIM VERBINDEN";
-            log(err);
-        });
+            const client = new tmi.Client({
+                connection: { secure: true, reconnect: true },
+                channels: [ 'kerniitv_97' ]
+            });
 
-        // Beim Klick Audio freischalten
-        playBtn.addEventListener('click', () => {
-            audioReady = true;
-            playBtn.style.backgroundColor = "#27ae60";
-            playBtn.innerText = "AUDIO IST AKTIV!";
-            speak("System bereit. Ich kann jetzt sprechen.");
-        });
+            client.on('message', (channel, tags, message, self) => {
+                chatDiv.innerHTML = "Letzte Nachricht: <br>" + tags['display-name'] + ": " + message;
+                if (message.toLowerCase().startsWith('!say')) {
+                    speak(tags['display-name'] + " sagt " + message.replace('!say', '').trim());
+                }
+            });
+
+            client.connect()
+                .then(() => {
+                    statusDiv.innerText = "✅ VERBUNDEN!";
+                    statusDiv.style.borderColor = "#00ff00";
+                    speak("System bereit.");
+                })
+                .catch(err => {
+                    statusDiv.innerText = "❌ VERBINDUNGSFEHLER";
+                    errorDiv.innerText = "Fehler: " + err;
+                    console.error(err);
+                });
+        }
     </script>
 </body>
 </html>
