@@ -44,6 +44,11 @@ const navigationHTML = `
                 <a href="epoxid-shop.html">🛒 Shop / Zu verkaufen</a>
             </div>
         </div>
+
+        <div class="dropdown">
+            <a href="tts.html" class="dropdown-toggle">
+            </div>
+        </div>
     </nav>
 </header>
 `;
