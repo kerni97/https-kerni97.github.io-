@@ -2,73 +2,70 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Twitch Verbindungstest</title>
+    <title>OBS TTS Fix</title>
     <script src="https://unpkg.com/tmi.js@1.8.5/browser/tmi.min.js"></script>
     <style>
-        body { background-color: #111; color: white; font-family: sans-serif; padding: 20px; }
-        #log-box { background: #000; border: 1px solid #444; height: 300px; overflow-y: scroll; padding: 10px; font-family: monospace; color: #0f0; }
-        .system { color: #aaa; }
-        .chat-msg { color: #fff; border-bottom: 1px solid #222; padding: 2px; }
-        button { padding: 10px; background: #e67e22; color: white; border: none; cursor: pointer; }
+        body { background-color: #222; color: white; font-family: sans-serif; text-align: center; }
+        #status { font-size: 20px; color: #00ff00; margin: 20px; padding: 10px; border: 2px solid #00ff00; }
+        button { width: 90%; padding: 30px; font-size: 25px; background: #e67e22; color: white; font-weight: bold; border-radius: 10px; cursor: pointer; }
+        #log { margin-top: 20px; font-family: monospace; text-align: left; padding: 10px; background: #000; height: 150px; overflow: hidden; }
     </style>
 </head>
 <body>
 
-    <h2>Twitch Chat Monitor</h2>
-    <button onclick="startEverything()">1. STARTEN & AUDIO AKTIVIEREN</button>
+    <div id="status">Verbindung wird geprüft...</div>
     
-    <p>Status: <span id="conn-status">Getrennt</span></p>
+    <!-- DIESER BUTTON IST DER SCHLÜSSEL -->
+    <button id="playBtn">KLICK MICH IN OBS (INTERAGIEREN)!</button>
 
-    <div id="log-box">
-        <div class="system">Warte auf Start...</div>
-    </div>
+    <div id="log">Chat Log:<br></div>
 
     <script>
-        const logBox = document.getElementById('log-box');
-        const statusSpan = document.getElementById('conn-status');
-        let ttsActive = false;
+        const log = (m) => { document.getElementById('log').innerHTML += m + "<br>"; };
+        const status = document.getElementById('status');
+        const playBtn = document.getElementById('playBtn');
 
-        function addLog(text, type = 'system') {
-            const div = document.createElement('div');
-            div.className = type;
-            div.innerText = "[" + new Date().toLocaleTimeString() + "] " + text;
-            logBox.appendChild(div);
-            logBox.scrollTop = logBox.scrollHeight;
-        }
+        let audioReady = false;
 
+        // Funktion zum Sprechen
         function speak(text) {
-            if (!ttsActive) return;
-            const ut = new SpeechSynthesisUtterance(text);
-            ut.lang = 'de-DE';
-            window.speechSynthesis.speak(ut);
+            if (!audioReady) {
+                log("Audio nicht bereit! Klicke den Button!");
+                return;
+            }
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'de-DE';
+            window.speechSynthesis.speak(utterance);
+            log("Spreche: " + text);
         }
 
+        // Twitch Verbindung startet SOFORT beim Laden
         const client = new tmi.Client({
-            connection: { secure: true, reconnect: true },
             channels: [ 'kerniitv_97' ]
         });
 
         client.on('message', (channel, tags, message, self) => {
-            addLog(tags['display-name'] + ": " + message, 'chat-msg');
-            
+            log(tags['display-name'] + ": " + message);
             if (message.toLowerCase().startsWith('!say')) {
-                const talk = message.replace('!say', '').trim();
-                speak(tags['display-name'] + " sagt " + talk);
+                const text = message.replace('!say', '').trim();
+                speak(tags['display-name'] + " sagt " + text);
             }
         });
 
-        client.on('connected', () => {
-            statusSpan.innerText = "VERBUNDEN mit kerniitv_97";
-            statusSpan.style.color = "#0f0";
-            addLog("ERFOLG: Verbindung zum Chat hergestellt!");
+        client.connect().then(() => {
+            status.innerText = "✅ VERBUNDEN MIT TWITCH";
+        }).catch(err => {
+            status.innerText = "❌ FEHLER BEIM VERBINDEN";
+            log(err);
         });
 
-        function startEverything() {
-            ttsActive = true;
-            addLog("Audio aktiviert. Test-Stimme wird abgespielt...");
-            speak("Verbindung wird aufgebaut.");
-            client.connect().catch(err => addLog("FEHLER: " + err, 'chat-msg'));
-        }
+        // Beim Klick Audio freischalten
+        playBtn.addEventListener('click', () => {
+            audioReady = true;
+            playBtn.style.backgroundColor = "#27ae60";
+            playBtn.innerText = "AUDIO IST AKTIV!";
+            speak("System bereit. Ich kann jetzt sprechen.");
+        });
     </script>
 </body>
 </html>
