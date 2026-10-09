@@ -2,98 +2,91 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>KerniiTV TTS Test</title>
+    <title>KerniiTV TTS Diagnose</title>
     <script src="https://unpkg.com/tmi.js@1.8.5/browser/tmi.min.js"></script>
     <style>
-        /* Damit wir auf der weißen Seite was sehen */
-        body { 
-            background-color: #222; 
-            color: white; 
-            font-family: Arial, sans-serif; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            height: 100vh; 
-            margin: 0;
-        }
-        #status { 
-            padding: 20px; 
-            border: 2px solid #555; 
-            border-radius: 10px;
-            background: #333;
-        }
-        .online { color: #00ff00; }
-        .message { margin-top: 20px; color: #ffaa00; font-weight: bold; }
-        button {
-            padding: 15px 30px;
-            font-size: 1.2rem;
-            cursor: pointer;
-            background-color: #e67e22;
-            color: white;
-            border: none;
-            border-radius: 5px;
-            margin-bottom: 20px;
-        }
+        body { background-color: #111; color: white; font-family: sans-serif; text-align: center; padding-top: 50px; }
+        #status { font-weight: bold; padding: 10px; margin-bottom: 20px; border: 1px solid #444; }
+        #log { color: #555; font-size: 0.8rem; margin-top: 20px; border-top: 1px solid #333; }
+        .highlight { color: #00ff00; font-size: 1.5rem; margin: 20px; }
+        button { padding: 15px; background: #e67e22; color: white; border: none; cursor: pointer; margin: 5px; }
+        #last-chat { font-size: 1.2rem; color: #ffcc00; background: #222; padding: 10px; }
     </style>
 </head>
 <body>
 
-    <!-- WICHTIG: Der Button aktiviert die Sprachausgabe im Browser -->
-    <button id="startBtn">TTS Aktivieren & Starten</button>
+    <div id="status">Schritt 1: Klicke einen der Buttons</div>
     
-    <div id="status">Warte auf Klick...</div>
-    <div id="last-msg" class="message"></div>
+    <button onclick="startTTS()">1. TTS STARTEN (Twitch)</button>
+    <button onclick="testVoice()">2. NUR AUDIO TESTEN</button>
+
+    <div class="highlight" id="display">Warte auf Aktion...</div>
+    
+    <div id="last-chat">Letzter Chat-Befehl: (noch nichts)</div>
+
+    <div id="log">Event Log:<br></div>
 
     <script>
-        const TWITCH_CHANNEL = 'kerniitv_97';
-        const statusDiv = document.getElementById('status');
-        const lastMsgDiv = document.getElementById('last-msg');
-        const startBtn = document.getElementById('startBtn');
+        const log = (msg) => { 
+            document.getElementById('log').innerHTML += msg + "<br>";
+            console.log(msg);
+        };
 
         let ttsEnabled = false;
+        const display = document.getElementById('display');
+        const chatDisplay = document.getElementById('last-chat');
 
-        // Funktion zum Vorlesen
+        // Stimmen vorladen (wichtig für Chrome/OBS)
+        window.speechSynthesis.getVoices();
+
         function speak(text) {
-            if (!ttsEnabled) return;
+            log("Versuche zu sprechen: " + text);
             const utterance = new SpeechSynthesisUtterance(text);
             utterance.lang = 'de-DE';
+            
+            utterance.onstart = () => log("Browser hat Audio gestartet...");
+            utterance.onerror = (e) => log("TTS FEHLER: " + e.error);
+            
             window.speechSynthesis.speak(utterance);
         }
 
-        // Klick-Event um Browser-Sperre aufzuheben
-        startBtn.addEventListener('click', () => {
+        function startTTS() {
             ttsEnabled = true;
-            statusDiv.innerHTML = "TTS ist <span class='online'>BEREIT</span>. Warte auf Chat...";
-            startBtn.style.display = 'none'; // Button verschwindet nach Klick
-            
-            // Test-Stimme
-            speak("System aktiviert. Ich höre jetzt auf deinen Twitch Chat.");
-        });
+            document.getElementById('status').innerText = "✅ Twitch-Verbindung aktiv!";
+            display.innerText = "Höre auf !say im Twitch-Chat...";
+            speak("System aktiviert. Twitch Verbindung steht.");
+        }
 
-        // Twitch Verbindung
+        function testVoice() {
+            display.innerText = "Audio-Test...";
+            speak("Das ist ein Test der Audioausgabe ohne Twitch.");
+        }
+
+        // Twitch Client
         const client = new tmi.Client({
             connection: { secure: true, reconnect: true },
-            channels: [ TWITCH_CHANNEL ]
+            channels: [ 'kerniitv_97' ]
         });
-
-        client.connect().catch(console.error);
 
         client.on('message', (channel, tags, message, self) => {
             if (self) return;
+            log("Nachricht erhalten: " + message);
 
-            if (message.toLowerCase().startsWith('!say ')) {
-                const textToSpeak = message.slice(5).trim();
+            if (message.toLowerCase().startsWith('!say')) {
                 const user = tags['display-name'];
+                const content = message.slice(4).trim();
+                chatDisplay.innerText = "Befehl von " + user + ": " + content;
                 
-                lastMsgDiv.innerText = user + " sagt: " + textToSpeak;
-                speak(user + " sagt " + textToSpeak);
+                if (ttsEnabled) {
+                    speak(user + " sagt " + content);
+                } else {
+                    log("Befehl ignoriert: TTS nicht gestartet (Button drücken!)");
+                }
             }
         });
 
-        client.on('connected', () => {
-            console.log("Verbunden!");
-        });
+        client.connect().then(() => log("Verbunden mit Twitch Chat von kerniitv_97"));
+
     </script>
 </body>
 </html>
