@@ -2,73 +2,97 @@
 <html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>KerniiTV TTS Overlay</title>
-    <!-- Wir laden die Twitch-Chat-Library -->
+    <title>KerniiTV TTS Test</title>
     <script src="https://unpkg.com/tmi.js@1.8.5/browser/tmi.min.js"></script>
     <style>
-        body { background: transparent; color: white; font-family: sans-serif; overflow: hidden; }
-        .status { font-size: 10px; opacity: 0.5; }
+        /* Damit wir auf der weißen Seite was sehen */
+        body { 
+            background-color: #222; 
+            color: white; 
+            font-family: Arial, sans-serif; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            justify-content: center; 
+            height: 100vh; 
+            margin: 0;
+        }
+        #status { 
+            padding: 20px; 
+            border: 2px solid #555; 
+            border-radius: 10px;
+            background: #333;
+        }
+        .online { color: #00ff00; }
+        .message { margin-top: 20px; color: #ffaa00; font-weight: bold; }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            cursor: pointer;
+            background-color: #e67e22;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
     </style>
 </head>
 <body>
-    <div id="status" class="status">TTS bereit - Warte auf Chat...</div>
+
+    <!-- WICHTIG: Der Button aktiviert die Sprachausgabe im Browser -->
+    <button id="startBtn">TTS Aktivieren & Starten</button>
+    
+    <div id="status">Warte auf Klick...</div>
+    <div id="last-msg" class="message"></div>
 
     <script>
-        // --- KONFIGURATION ---
-        const TWITCH_CHANNEL = 'kerniitv_97'; // Dein Kanalname
-        const COMMAND = '!say';              // Befehl für TTS (z.B. !say Hallo)
-        const TTS_SPEED = 1.0;               // Geschwindigkeit (0.1 bis 2.0)
-        const TTS_PITCH = 1.0;               // Tonhöhe (0.1 bis 2.0)
-        
-        // Liste verbotener Wörter (einfach erweitern)
-        const BLACKLIST = ['schimpfwort1', 'schimpfwort2', 'trollwort'];
+        const TWITCH_CHANNEL = 'kerniitv_97';
+        const statusDiv = document.getElementById('status');
+        const lastMsgDiv = document.getElementById('last-msg');
+        const startBtn = document.getElementById('startBtn');
 
-        // --- TWITCH CONNECTION ---
+        let ttsEnabled = false;
+
+        // Funktion zum Vorlesen
+        function speak(text) {
+            if (!ttsEnabled) return;
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'de-DE';
+            window.speechSynthesis.speak(utterance);
+        }
+
+        // Klick-Event um Browser-Sperre aufzuheben
+        startBtn.addEventListener('click', () => {
+            ttsEnabled = true;
+            statusDiv.innerHTML = "TTS ist <span class='online'>BEREIT</span>. Warte auf Chat...";
+            startBtn.style.display = 'none'; // Button verschwindet nach Klick
+            
+            // Test-Stimme
+            speak("System aktiviert. Ich höre jetzt auf deinen Twitch Chat.");
+        });
+
+        // Twitch Verbindung
         const client = new tmi.Client({
             connection: { secure: true, reconnect: true },
             channels: [ TWITCH_CHANNEL ]
         });
 
-        client.connect();
+        client.connect().catch(console.error);
 
         client.on('message', (channel, tags, message, self) => {
-            if (self) return; // Ignoriere Nachrichten vom Bot selbst
+            if (self) return;
 
-            // Prüfen, ob die Nachricht mit unserem Befehl startet
-            if (message.toLowerCase().startsWith(COMMAND)) {
-                let textToSpeak = message.slice(COMMAND.length).trim();
+            if (message.toLowerCase().startsWith('!say ')) {
+                const textToSpeak = message.slice(5).trim();
+                const user = tags['display-name'];
                 
-                // Sicherheit: Schimpfwörter filtern
-                const containsBlacklisted = BLACKLIST.some(word => textToSpeak.toLowerCase().includes(word));
-                
-                if (containsBlacklisted) {
-                    console.log("TTS blockiert: Schimpfwort gefunden.");
-                    return;
-                }
-
-                // Nachricht vorlesen
-                speak(textToSpeak, tags['display-name']);
+                lastMsgDiv.innerText = user + " sagt: " + textToSpeak;
+                speak(user + " sagt " + textToSpeak);
             }
         });
 
-        // --- TTS FUNKTION ---
-        function speak(text, username) {
-            // Optional: Sage vorher, wer spricht (z.B. "Florian sagt: ...")
-            const fullText = `${username} sagt: ${text}`;
-            
-            const utterance = new SpeechSynthesisUtterance(fullText);
-            utterance.lang = 'de-DE'; // Deutsche Stimme
-            utterance.rate = TTS_SPEED;
-            utterance.pitch = TTS_PITCH;
-            
-            // Status-Anzeige aktualisieren
-            document.getElementById('status').innerText = "Spricht gerade: " + text;
-            
-            window.speechSynthesis.speak(utterance);
-        }
-
         client.on('connected', () => {
-            document.getElementById('status').innerText = "Verbunden mit " + TWITCH_CHANNEL;
+            console.log("Verbunden!");
         });
     </script>
 </body>
