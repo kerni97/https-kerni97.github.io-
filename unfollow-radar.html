@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UnfollowRadar – Wer hat dir auf Twitch entfolgt?</title>
+<meta name="description" content="Ein-Datei-Edition: Finde heraus, wer dir auf Twitch gefolgt und wieder entfolgt ist. Login, Sync & Historie – alles in einer HTML-Datei." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --void:#07060c; --abyss:#0b0912; --panel:rgba(255,255,255,.045);
+    --line:rgba(255,255,255,.09); --ink:#f2efff; --dim:#a49cc7; --faint:#6d6591;
+    --primary:#9146ff; --iris:#772ce8; --orchid:#c084fc; --magenta:#ff4fc8;
+    --danger:#ff4d6d; --mint:#34f5a5; --amber:#ffc34d;
+    --font-d:"Space Grotesk",Inter,ui-sans-serif,system-ui,sans-serif;
+    --font-b:Inter,ui-sans-serif,system-ui,sans-serif;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{background:var(--void);color:var(--ink);font-family:var(--font-b);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+  ::selection{background:rgba(145,70,255,.4)}
+  a{color:inherit}
+  button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit}
+  input{font-family:inherit}
+  code{font-family:ui-monospace,Menlo,monospace}
+
+  .bg{position:fixed;inset:0;z-index:-1;pointer-events:none}
+  .bg::before{content:"";position:absolute;inset:0 0 55% 0;
+    background-image:linear-gradient(rgba(145,70,255,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(145,70,255,.06) 1px,transparent 1px);
+    background-size:54px 54px;
+    -webkit-mask-image:radial-gradient(ellipse 90% 80% at 50% 0,#000 30%,transparent 75%);
+            mask-image:radial-gradient(ellipse 90% 80% at 50% 0,#000 30%,transparent 75%)}
+  .blob{position:absolute;border-radius:50%;filter:blur(120px);animation:aurora 16s ease-in-out infinite alternate}
+  .b1{top:-160px;left:50%;width:820px;height:480px;transform:translateX(-50%);background:rgba(145,70,255,.16)}
+  .b2{top:55%;right:-180px;width:420px;height:420px;background:rgba(255,79,200,.08);animation-delay:-6s}
+  @keyframes aurora{0%{transform:translate(-4%,-3%) scale(1)}100%{transform:translate(4%,4%) scale(1.12)}}
+
+  .wrap{max-width:1060px;margin:0 auto;padding:0 22px}
+
+  header{position:sticky;top:0;z-index:50;backdrop-filter:blur(18px);background:rgba(7,6,12,.7);border-bottom:1px solid var(--line)}
+  header .wrap{display:flex;align-items:center;justify-content:space-between;padding:14px 22px}
+  .logo{display:flex;align-items:center;gap:10px;text-decoration:none}
+  .logo-mark{width:34px;height:34px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--orchid),var(--primary),var(--magenta));box-shadow:0 0 22px rgba(145,70,255,.45)}
+  .logo-name{font-family:var(--font-d);font-weight:600;font-size:17px;letter-spacing:-.02em}
+  .grad{background:linear-gradient(100deg,var(--orchid),var(--primary) 45%,var(--magenta));-webkit-background-clip:text;background-clip:text;color:transparent}
+
+  .btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border-radius:999px;padding:13px 24px;font-size:14px;font-weight:600;text-decoration:none;transition:transform .25s,box-shadow .25s,background .25s;white-space:nowrap}
+  .btn-twitch{color:#fff;background:linear-gradient(90deg,var(--primary),var(--iris));box-shadow:0 8px 30px rgba(145,70,255,.35)}
+  .btn-twitch:hover{transform:scale(1.04);box-shadow:0 8px 42px rgba(145,70,255,.5)}
+  .btn-ghost{border:1px solid var(--line);color:var(--dim)}
+  .btn-ghost:hover{border-color:rgba(255,255,255,.25);color:var(--ink)}
+  .btn-danger{border:1px solid rgba(255,77,109,.4);color:var(--danger)}
+  .btn-danger:hover{background:rgba(255,77,109,.1)}
+  .btn[disabled]{opacity:.6;cursor:wait;transform:none}
+  .spin{animation:rot 1s linear infinite}
+  @keyframes rot{to{transform:rotate(360deg)}}
+
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:24px;padding:26px;margin-top:22px}
+  .card h2{font-family:var(--font-d);font-size:19px;font-weight:600;display:flex;align-items:center;gap:10px}
+  .muted{color:var(--dim);font-size:14px;line-height:1.65}
+  .small{font-size:12px;color:var(--faint)}
+
+  /* Hero / Panels */
+  .hero{padding:72px 0 8px;text-align:center}
+  .badge{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(145,70,255,.3);background:rgba(145,70,255,.1);color:var(--orchid);border-radius:999px;padding:6px 16px;font-size:11px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+  h1{font-family:var(--font-d);font-size:clamp(38px,7vw,62px);font-weight:700;line-height:1.04;letter-spacing:-.03em;margin-top:22px}
+  h1 .del{color:var(--danger);text-decoration:line-through;text-decoration-thickness:3px;text-decoration-color:rgba(255,77,109,.55)}
+  .hero p{max-width:620px;margin:20px auto 0;color:var(--dim);font-size:16px;line-height:1.7}
+  .hero .actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:34px}
+  .trust{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;margin-top:28px;font-size:13px;color:var(--faint)}
+  .trust span{display:flex;align-items:center;gap:7px}
+
+  .steps{counter-reset:s;margin:18px 0 4px;text-align:left}
+  .steps li{display:flex;gap:14px;list-style:none;margin-bottom:14px}
+  .steps li::before{counter-increment:s;content:counter(s);flex:0 0 26px;height:26px;border-radius:50%;border:1px solid rgba(255,195,77,.45);color:var(--amber);font-family:var(--font-d);font-size:12px;font-weight:700;display:grid;place-items:center;margin-top:1px}
+  .copybox{display:flex;align-items:center;justify-content:space-between;gap:10px;background:rgba(0,0,0,.45);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:12.5px;color:var(--orchid);margin-top:8px;width:100%;text-align:left;word-break:break-all}
+  .copybox:hover{border-color:rgba(145,70,255,.45)}
+  .field{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+  .field input{flex:1;min-width:220px;background:rgba(0,0,0,.4);border:1px solid var(--line);border-radius:12px;padding:12px 15px;color:var(--ink);font-size:14px;outline:none;transition:border .2s}
+  .field input:focus{border-color:var(--primary)}
+
+  /* Dashboard */
+  .dash-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:36px 0 4px}
+  .dash-head h1{font-size:clamp(28px,4.5vw,38px);margin-top:0}
+  .userchip{display:flex;align-items:center;gap:11px;background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:6px 16px 6px 6px;text-decoration:none;transition:border .2s}
+  .userchip:hover{border-color:rgba(145,70,255,.45)}
+  .userchip .nm{font-size:13px;font-weight:600;line-height:1.2;display:block}
+  .userchip .lg{font-size:11px;color:var(--faint);line-height:1.2;display:block}
+  .avatar{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-size:12px;font-weight:700;color:#fff;object-fit:cover;flex:0 0 auto}
+  .avatar.ring-mint{box-shadow:0 0 0 2px rgba(52,245,165,.4)}
+  .avatar.ring-danger{box-shadow:0 0 0 2px rgba(255,77,109,.4)}
+  .avatar.ring-orchid{box-shadow:0 0 0 2px rgba(145,70,255,.4)}
+
+  .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:14px;margin-top:24px}
+  .stat{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:20px;transition:transform .3s,border-color .3s}
+  .stat:hover{transform:translateY(-3px);border-color:rgba(145,70,255,.3)}
+  .stat .ic{width:38px;height:38px;border-radius:12px;display:grid;place-items:center;margin-bottom:14px}
+  .stat .v{font-family:var(--font-d);font-size:30px;font-weight:700;letter-spacing:-.02em}
+  .stat .l{font-size:12.5px;color:var(--dim);margin-top:2px}
+  .chip{display:inline-flex;align-items:center;gap:5px;border-radius:999px;padding:4px 10px;font-size:11px;font-weight:700;margin-top:10px}
+  .chip.mint{background:rgba(52,245,165,.1);color:var(--mint)}
+  .chip.danger{background:rgba(255,77,109,.1);color:var(--danger)}
+  .chip.flat{background:rgba(255,255,255,.05);color:var(--faint)}
+
+  .tabs{display:flex;border:1px solid var(--line);background:rgba(0,0,0,.4);border-radius:999px;padding:4px;gap:2px}
+  .tabs button{border-radius:999px;padding:7px 15px;font-size:12px;font-weight:600;color:var(--dim);transition:.2s}
+  .tabs button.on-all{background:var(--primary);color:#fff}
+  .tabs button.on-unfollow{background:var(--danger);color:#fff}
+  .tabs button.on-follow{background:#10b981;color:#fff}
+  .tabs button:not(.on-all):not(.on-unfollow):not(.on-follow):hover{color:var(--ink)}
+
+  .event{display:flex;align-items:center;gap:14px;padding:13px 14px;border-radius:16px;border:1px solid transparent;transition:.2s}
+  .event:hover{background:rgba(255,255,255,.035);border-color:var(--line)}
+  .event .info{flex:1;min-width:0}
+  .event .name{font-size:15px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-decoration:none}
+  .event .name:hover{color:var(--orchid)}
+  .event .meta{font-size:12px;color:var(--faint);margin-top:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .event .right{text-align:right;flex:0 0 auto}
+  .tag{display:inline-flex;align-items:center;gap:5px;font-size:10.5px;font-weight:800;letter-spacing:.06em;border-radius:999px;padding:4px 10px}
+  .tag.mint{background:rgba(52,245,165,.1);color:var(--mint)}
+  .tag.danger{background:rgba(255,77,109,.1);color:var(--danger)}
+
+  .empty{border:1px dashed var(--line);border-radius:18px;padding:52px 20px;text-align:center}
+  .empty .ic{width:52px;height:52px;margin:0 auto 14px;border-radius:50%;background:rgba(255,255,255,.05);border:1px solid var(--line);display:grid;place-items:center;color:var(--faint)}
+  .empty .t{font-family:var(--font-d);font-size:17px;font-weight:600}
+  .empty p{max-width:420px;margin:8px auto 0;font-size:13.5px;color:var(--dim);line-height:1.6}
+
+  .divider{height:1px;background:var(--line);margin:16px 0}
+
+  .banner{display:flex;align-items:flex-start;gap:11px;border-radius:16px;padding:14px 17px;font-size:14px;line-height:1.55;margin-top:20px}
+  .banner.ok{border:1px solid rgba(52,245,165,.25);background:rgba(52,245,165,.06);color:#c9fbe6}
+  .banner.warn{border:1px solid rgba(255,195,77,.25);background:rgba(255,195,77,.06);color:#ffe9c2}
+  .banner.err{border:1px solid rgba(255,77,109,.25);background:rgba(255,77,109,.07);color:#ffd4dc}
+  .banner svg{flex:0 0 auto;margin-top:2px}
+
+  footer{margin-top:56px;border-top:1px solid var(--line);padding:26px 0 40px}
+  footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--faint)}
+
+  #toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);opacity:0;transition:.35s;z-index:100;pointer-events:none;max-width:min(92vw,520px)}
+  #toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  #toast>div{border-radius:16px;padding:13px 18px;font-size:13.5px;background:rgba(16,13,26,.92);border:1px solid var(--line);backdrop-filter:blur(16px);box-shadow:0 16px 40px rgba(0,0,0,.5)}
+
+  .hidden{display:none!important}
+  @media (max-width:640px){
+    .dash-head{align-items:flex-start}
+    .card{padding:20px}
+  }
+</style>
+</head>
+<body>
+<div class="bg"><div class="blob b1"></div><div class="blob b2"></div></div>
+
+<header>
+  <div class="wrap">
+    <a class="logo" href="/unfollow-radar.html">
+      <span class="logo-mark">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="#fff"/><path d="M12 12l6-6"/></svg>
+      </span>
+      <span class="logo-name">Unfollow<span class="grad">Radar</span> <span class="small" style="font-weight:400">· HTML-Edition</span></span>
+    </a>
+    <div style="display:flex;gap:10px;align-items:center">
+      <a class="btn btn-ghost" style="padding:9px 16px;font-size:12.5px" href="/">Zur Server-Version</a>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- ============ HERO / LOGIN ============ -->
+  <section id="panel-hero" class="hero">
+    <span class="badge">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><path d="M12 12l6-6"/></svg>
+      EinDatei · Kein Server · kein Tracking
+    </span>
+    <h1>Wer hat dir<br /><span class="del">entfolgt</span><span class="grad">?</span></h1>
+    <p>Diese eine HTML-Datei verbindet sich direkt mit der offiziellen Twitch-API.
+       Melde dich an – beim ersten Mal wird deine Follower-Liste als Baseline im
+       Browser gespeichert, danach siehst du bei jedem Besuch alle Neuankömmlinge
+       und Abgänge.</p>
+    <div class="actions">
+      <button class="btn btn-twitch" id="btn-login">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714z"/></svg>
+        Mit Twitch anmelden
+      </button>
+      <button class="btn btn-ghost" id="btn-setup-toggle">Einrichtung anzeigen</button>
+    </div>
+    <div class="trust">
+      <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34f5a5" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg> Nur Lese-Zugriff</span>
+      <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2.2" stroke-linecap="round"><rect x="3" y="11" width="18" height="10" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg> Daten bleiben in deinem Browser</span>
+      <span><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ffc34d" stroke-width="2.2" stroke-linecap="round"><path d="M13 2 3 14h8l-1 8 11-14h-9l1-6z"/></svg> Sync in Sekunden</span>
+    </div>
+  </section>
+
+  <!-- ============ SETUP ============ -->
+  <section id="panel-setup" class="card hidden">
+    <h2>
+      <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#ffc34d" stroke-width="2" stroke-linecap="round"><path d="M12 9v4"/><path d="M12 17h.01"/><path d="M10.3 3.6 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.6a2 2 0 0 0-3.4 0z"/></svg>
+      Einmalige Einrichtung (kostenlos, ~3 Minuten)
+    </h2>
+    <p class="muted" style="margin-top:10px">Diese Datei spricht direkt mit Twitch – dafür brauchst du eine eigene
+      (kostenlose) Twitch-Client-ID. Die Client-ID ist <em>kein</em> Geheimnis: Sie darf im Browser stehen,
+      ein Client-Secret wird hier nicht benötigt.</p>
+    <ol class="steps" style="margin-top:18px">
+      <li class="muted">Öffne die <a href="https://dev.twitch.tv/console/apps" target="_blank" rel="noreferrer" style="color:var(--orchid);font-weight:600">Twitch Developer Console</a> und registriere eine Anwendung (Kategorie: <em>Analytics Tool</em>).</li>
+      <li class="muted" style="min-width:0;flex:1">Trage diese <b>OAuth-Redirect-URL</b> ein – sie ist exakt die Adresse dieser Seite:
+        <button class="copybox" id="copy-redirect"><span id="redirect-url">…</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" style="flex:0 0 auto"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+        </button>
+      </li>
+      <li class="muted">Kopiere die <b>Client-ID</b> deiner Anwendung hier hinein:
+        <div class="field">
+          <input id="input-client-id" type="text" spellcheck="false" autocomplete="off" placeholder="z. B. gp762nuuoqcoxypju8c569th9wz7q5" />
+          <button class="btn btn-twitch" id="btn-save-client">Speichern</button>
+        </div>
+      </li>
+      <li class="muted">Danach oben auf <b>„Mit Twitch anmelden“</b> klicken – fertig. Andere können diese Datei ebenfalls nutzen (jeder Browser merkt sich seine eigene ID &amp; Daten).</li>
+    </ol>
+    <p class="small" style="margin-top:6px">Hinweis: Die Seite muss über http(s) oder localhost geöffnet sein – „file://“ funktioniert bei Twitch nicht.</p>
+  </section>
+
+  <!-- ============ DASHBOARD ============ -->
+  <section id="panel-dash" class="hidden">
+    <div class="dash-head">
+      <div>
+        <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+          <a class="userchip" id="userchip" target="_blank" rel="noreferrer">
+            <span class="avatar ring-orchid" id="user-avatar">··</span>
+            <span><span class="nm" id="user-name">…</span><span class="lg" id="user-login">…</span></span>
+          </a>
+          <button class="btn btn-danger" style="padding:9px 16px;font-size:12.5px" id="btn-logout">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="m16 17 5-5-5-5"/><path d="M21 12H9"/></svg>
+            Abmelden
+          </button>
+        </div>
+        <h1 style="margin-top:14px">Dein <span class="grad">Radarschirm</span></h1>
+        <p class="muted" id="dash-sub" style="margin-top:6px;font-size:13px">…</p>
+      </div>
+      <button class="btn btn-twitch" id="btn-sync">
+        <svg id="sync-ic" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg>
+        <span id="sync-label">Jetzt synchronisieren</span>
+      </button>
+    </div>
+
+    <div id="dash-banner" class="banner warn hidden"></div>
+
+    <div class="stats">
+      <div class="stat">
+        <span class="ic" style="background:rgba(145,70,255,.12)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7.5" r="3.5"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M15.5 4.13a3.5 3.5 0 0 1 0 6.75"/></svg></span>
+        <div class="v" id="st-total">—</div>
+        <div class="l">Follower auf Twitch</div>
+      </div>
+      <div class="stat">
+        <span class="ic" style="background:rgba(52,245,165,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34f5a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="m16 11 2 2 4-4"/></svg></span>
+        <div class="v" id="st-active">—</div>
+        <div class="l">Aktive Follower (getrackt)</div>
+      </div>
+      <div class="stat">
+        <span class="ic" style="background:rgba(52,245,165,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#34f5a5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg></span>
+        <div class="v" id="st-new">—</div>
+        <div class="l">Neu gefolgt seit Start</div>
+        <div id="st-new-delta"></div>
+      </div>
+      <div class="stat">
+        <span class="ic" style="background:rgba(255,77,109,.1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#ff4d6d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11h-6"/></svg></span>
+        <div class="v" id="st-gone">—</div>
+        <div class="l">Entfolgt seit Start</div>
+        <div id="st-gone-delta"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+        <h2>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 9-9"/><path d="M3 3v6h6"/><path d="M12 7v5l3 3"/></svg>
+          Follower-Verlauf
+        </h2>
+        <span class="small">ein Punkt pro Sync</span>
+      </div>
+      <div id="chart" style="margin-top:14px"></div>
+    </div>
+
+    <div class="card">
+      <div style="display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap">
+        <h2>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#c084fc" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          Wer ist gekommen, wer ist gegangen
+        </h2>
+        <div class="tabs" id="tabs">
+          <button data-tab="all">Alle</button>
+          <button data-tab="unfollow">Entfolgt</button>
+          <button data-tab="follow">Neu</button>
+        </div>
+      </div>
+      <div class="divider"></div>
+      <div id="event-list"></div>
+    </div>
+
+    <div class="card" style="display:flex;gap:14px;align-items:flex-start">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ffc34d" stroke-width="2" stroke-linecap="round" style="flex:0 0 auto;margin-top:2px"><path d="M12 9v4"/><path d="M12 17h.01"/><circle cx="12" cy="12" r="10"/></svg>
+      <div style="flex:1">
+        <p class="muted" style="font-size:13.5px">
+          <b style="color:var(--ink)">So funktioniert die Erkennung:</b> Twitch liefert nur deine
+          <i>aktuelle</i> Follower-Liste. Diese Datei vergleicht sie bei jedem Besuch mit dem
+          gespeicherten Stand (Browser-localStorage) und erkennt so Entfolgungen &amp; Neu-Follows.
+          Frühere Unfollows vor dem ersten Sync kann niemand rekonstruieren. Deine Daten kannst du
+          jederzeit sichern:
+        </p>
+        <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+          <button class="btn btn-ghost" style="padding:9px 16px;font-size:12.5px" id="btn-export">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m7 10 5 5 5-5"/><path d="M12 15V3"/></svg>
+            Daten exportieren
+          </button>
+          <label class="btn btn-ghost" style="padding:9px 16px;font-size:12.5px;cursor:pointer">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="m17 8-5-5-5 5"/><path d="M12 3v12"/></svg>
+            Importieren
+            <input type="file" id="input-import" accept="application/json" class="hidden" />
+          </label>
+          <button class="btn btn-ghost" style="padding:9px 16px;font-size:12.5px" id="btn-change-client">Client-ID ändern</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <span>UnfollowRadar HTML-Edition · Daten nur lokal im Browser (localStorage)</span>
+      <span>Keine Verbindung zu Twitch Interactive, Inc. · „Twitch“ ist eine Marke von Amazon.</span>
+    </div>
+  </footer>
+</main>
+
+<div id="toast"><div id="toast-box"></div></div>
+
+<script>
+"use strict";
+
+/* ================= Konfiguration & Helfer ================= */
+var SCOPES = "user:read:email moderator:read:followers";
+var LS_CLIENT = "ur_html_client_id";
+var LS_TOKEN = "ur_html_token";
+var SS_STATE = "ur_html_state";
+
+function $(id){ return document.getElementById(id); }
+function esc(s){ return String(s == null ? "" : s).replace(/[&<>"']/g, function(c){ return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]; }); }
+function fmtNum(n){ return new Intl.NumberFormat("de-DE").format(n); }
+function fmtDate(iso){ return new Intl.DateTimeFormat("de-DE",{day:"2-digit",month:"short",year:"numeric"}).format(new Date(iso)); }
+var RTF = new Intl.RelativeTimeFormat("de-DE",{numeric:"auto"});
+function timeAgo(iso){
+  var s = Math.round((new Date(iso).getTime() - Date.now())/1000), a = Math.abs(s);
+  if(a < 60) return "gerade eben";
+  var m = Math.round(s/60); if(Math.abs(m) < 60) return RTF.format(m,"minute");
+  var h = Math.round(m/60); if(Math.abs(h) < 24) return RTF.format(h,"hour");
+  var d = Math.round(h/24); if(Math.abs(d) < 30) return RTF.format(d,"day");
+  var mo = Math.round(d/30); if(Math.abs(mo) < 12) return RTF.format(mo,"month");
+  return RTF.format(Math.round(mo/12),"year");
+}
+function randHex(len){ var a = new Uint8Array(len); (crypto||{}).getRandomValues ? crypto.getRandomValues(a) : a.forEach(function(_,i){a[i]=Math.floor(Math.random()*256)}); return Array.prototype.map.call(a,function(b){return ("0"+b.toString(16)).slice(-2)}).join(""); }
+function redirectUri(){ 
+  var origin = location.origin;
+  if (!origin.includes("localhost") && origin.startsWith("http:")) {
+    origin = origin.replace("http:", "https:");
+  }
+  return origin + location.pathname; 
+}
+
+var toastTimer=null;
+function toast(msg, tone){
+  var box=$("toast-box");
+  box.className="banner "+(tone||"ok");
+  box.style.margin="0";
+  box.innerHTML=msg;
+  $("toast").classList.add("show");
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(function(){ $("toast").classList.remove("show"); }, 4200);
+}
+function banner(msg, tone){
+  var b=$("dash-banner");
+  if(!msg){ b.classList.add("hidden"); return; }
+  b.className="banner "+tone;
+  b.innerHTML=msg;
+}
+
+/* Icons als Snippets */
+var IC = {
+  plus:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M19 8v6"/><path d="M22 11h-6"/></svg>',
+  minus:'<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 11h-6"/></svg>',
+  radar:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/><path d="M12 12l6-6"/></svg>',
+  ghost:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 10h.01"/><path d="M15 10h.01"/><path d="M12 2a8 8 0 0 0-8 8v12l3-3 2.5 2.5L12 19l2.5 2.5L17 19l3 3V10a8 8 0 0 0-8-8z"/></svg>',
+  users:'<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7.5" r="3.5"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M15.5 4.13a3.5 3.5 0 0 1 0 6.75"/></svg>'
+};
+
+function avatarGradient(seed){
+  var h=0; for(var i=0;i<seed.length;i++) h=(h*31+seed.charCodeAt(i))>>>0;
+  var h1=h%360, h2=(h1+60+(h%90))%360;
+  return "linear-gradient(135deg,hsl("+h1+" 70% 45%),hsl("+h2+" 75% 35%))";
+}
+function avatarHtml(name, img, ring){
+  if(img) return '<img class="avatar '+ring+'" src="'+esc(img)+'" alt="" loading="lazy" referrerpolicy="no-referrer" />';
+  return '<span class="avatar '+ring+'" style="background:'+avatarGradient(name)+'">'+esc(name.slice(0,2).toUpperCase())+'</span>';
+}
+
+/* ================= Twitch API ================= */
+function getClientId(){ return localStorage.getItem(LS_CLIENT)||""; }
+function getToken(){ return localStorage.getItem(LS_TOKEN)||""; }
+
+function login(){
+  var cid=getClientId();
+  if(!cid){ showSetup(); toast("Bitte zuerst deine Twitch-Client-ID eintragen.","warn"); $("input-client-id").focus(); return; }
+  var state=randHex(12);
+  sessionStorage.setItem(SS_STATE,state);
+  var url="https://id.twitch.tv/oauth2/authorize?client_id="+encodeURIComponent(cid)+
+    "&redirect_uri="+encodeURIComponent(redirectUri())+
+    "&response_type=token&scope="+encodeURIComponent(SCOPES)+"&state="+state;
+  location.href=url;
+}
+
+function api(path){
+  return fetch("https://api.twitch.tv/helix"+path,{
+    headers:{ "Authorization":"Bearer "+getToken(), "Client-Id":getClientId() }
+  }).then(function(res){
+    if(res.status===401||res.status===403){ throw {auth:true}; }
+    if(!res.ok){ throw {http:res.status}; }
+    return res.json();
+  });
+}
+
+/* ================= State (localStorage) ================= */
+var ME=null;
+function storeKey(){ return "ur_html_store_"+ME.id; }
+function loadStore(){
+  try{
+    var s=JSON.parse(localStorage.getItem(storeKey())||"null");
+    if(s&&s.followers&&s.unfollowed&&s.events&&s.snaps) return s;
+  }catch(e){}
+  return { createdAt:new Date().toISOString(), followers:{}, unfollowed:{}, events:[], snaps:[], lastSync:null };
+}
+function saveStore(s){ localStorage.setItem(storeKey(), JSON.stringify(s)); }
+
+/* ================= Auth-Callback verarbeiten ================= */
+function handleHash(){
+  if(location.hash.indexOf("access_token=")===-1 && location.search.indexOf("error=")===-1) return false;
+  if(location.search.indexOf("error=")!==-1){
+    var q=new URLSearchParams(location.search);
+    toast("Anmeldung abgebrochen: "+esc(q.get("error_description")||q.get("error")||"unbekannt"),"err");
+    history.replaceState(null,"",location.pathname);
+    return false;
+  }
+  var h=new URLSearchParams(location.hash.slice(1));
+  var token=h.get("access_token"), state=h.get("state");
+  history.replaceState(null,"",location.pathname);
+  if(!token||state!==sessionStorage.getItem(SS_STATE)){ toast("Sicherheitsprüfung fehlgeschlagen – bitte erneut anmelden.","err"); return false; }
+  localStorage.setItem(LS_TOKEN,token);
+  return true;
+}
+
+/* ================= Follower laden & vergleichen ================= */
+function fetchAllFollowers(uid){
+  var all=[], cursor=null, page=0, total=0;
+  function step(){
+    var url="/channels/followers?broadcaster_id="+encodeURIComponent(uid)+"&first=100";
+    if(cursor) url+="&after="+encodeURIComponent(cursor);
+    return api(url).then(function(d){
+      total=d.total; all=all.concat(d.data||[]); cursor=(d.pagination&&d.pagination.cursor)||null; page++;
+      if(cursor && (d.data||[]).length && page<100) return step();
+      return { list:all, total:total };
+    });
+  }
+  return step();
+}
+
+function fetchAvatars(ids){
+  var map={}, batch=ids.slice(0,300);
+  function step(i){
+    if(i>=batch.length) return Promise.resolve(map);
+    var chunk=batch.slice(i,i+100);
+    if(!chunk.length) return Promise.resolve(map);
+    var qs=chunk.map(function(id){return "id="+encodeURIComponent(id)}).join("&");
+    return api("/users?"+qs).then(function(d){
+      (d.data||[]).forEach(function(u){ if(u.profile_image_url) map[u.id]=u.profile_image_url; });
+      return step(i+100);
+    }).catch(function(){ return step(i+100); });
+  }
+  return step(0);
+}
+
+function doSync(){
+  var store=loadStore();
+  var baseline=!store.lastSync;
+  var now=new Date().toISOString();
+
+  return fetchAllFollowers(ME.id).then(function(res){
+    var cur=res.list, total=res.total;
+    var avIds=[];
+    cur.forEach(function(f){
+      if(!store.followers[f.user_id] && !store.unfollowed[f.user_id]) avIds.push(f.user_id);
+    });
+    if(!baseline && avIds.length>300) avIds=avIds.slice(0,300);
+    if(baseline) avIds=avIds.slice(0,50);
+    return fetchAvatars(avIds).then(function(avatars){
+      var newCount=0, goneCount=0, reCount=0;
+      var remaining={};
+      Object.keys(store.followers).forEach(function(id){ remaining[id]=store.followers[id]; });
+
+      cur.forEach(function(f){
+        var id=f.user_id;
+        if(store.followers[id]){
+          var ex=store.followers[id];
+          ex.login=f.user_login; ex.name=f.user_name;
+          if(f.followed_at) ex.followedAt=f.followed_at;
+          delete remaining[id];
+        } else if(store.unfollowed[id]){
+          var uf=store.unfollowed[id]; delete store.unfollowed[id];
+          uf.followedAt=f.followed_at||now; uf.login=f.user_login; uf.name=f.user_name;
+          if(avatars[id]) uf.img=avatars[id];
+          store.followers[id]=uf; reCount++;
+          store.events.unshift({type:"follow",id:id,login:uf.login,name:uf.name,img:uf.img||null,at:now,refollow:true});
+        } else {
+          var row={login:f.user_login,name:f.user_name,img:avatars[id]||null,followedAt:f.followed_at||now};
+          store.followers[id]=row;
+          if(!baseline){
+            newCount++;
+            store.events.unshift({type:"follow",id:id,login:row.login,name:row.name,img:row.img,at:now,refollow:false});
+          }
+        }
+      });
+
+      Object.keys(remaining).forEach(function(id){
+        var ex=remaining[id]; delete store.followers[id];
+        ex.unfollowedAt=now;
+        store.unfollowed[id]=ex; goneCount++;
+        store.events.unshift({type:"unfollow",id:id,login:ex.login,name:ex.name,img:ex.img||null,at:now,followedAt:ex.followedAt||null});
+      });
+
+      store.events=store.events.slice(0,500);
+      store.snaps.push({total:total,at:now});
+      store.snaps=store.snaps.slice(-60);
+      store.lastSync=now;
+      saveStore(store);
+      return {store:store,baseline:baseline,total:total,newCount:newCount,goneCount:goneCount,reCount:reCount};
+    });
+  });
+}
+
+/* ================= Rendering ================= */
+var TAB="all";
+var LAST_STORE=null;
+var LAST_TOTAL=null;
+
+function render(){
+  if(!ME||!LAST_STORE) return;
+  var store=LAST_STORE;
+
+  $("user-name").textContent=ME.display_name;
+  $("user-login").textContent="@"+ME.login;
+  $("userchip").href="https://twitch.tv/"+ME.login;
+  var ua=$("user-avatar");
+  if(ME.profile_image_url){ ua.outerHTML='<img class="avatar ring-orchid" id="user-avatar" src="'+esc(ME.profile_image_url)+'" alt="" referrerpolicy="no-referrer" />'; }
+  else { ua.textContent=ME.display_name.slice(0,2).toUpperCase(); ua.style.background=avatarGradient(ME.display_name); }
+
+  $("dash-sub").innerHTML="Tracking seit "+fmtDate(store.createdAt)+" · Letzter Sync: <b style='color:var(--ink)'>"+(store.lastSync?timeAgo(store.lastSync):"nie")+"</b> · Jeder Besuch synchronisiert automatisch";
+
+  var activeN=Object.keys(store.followers).length;
+  var newEvents=store.events.filter(function(e){return e.type==="follow"}).length;
+  var goneEvents=store.events.filter(function(e){return e.type==="unfollow"}).length;
+
+  $("st-total").textContent=LAST_TOTAL!=null?fmtNum(LAST_TOTAL):"—";
+  $("st-active").textContent=fmtNum(activeN);
+  $("st-new").textContent=fmtNum(newEvents);
+  $("st-gone").textContent=fmtNum(goneEvents);
+  $("st-new-delta").innerHTML="";
+  $("st-gone-delta").innerHTML="";
+
+  renderChart(store.snaps);
+  renderList();
+  document.querySelectorAll("#tabs button").forEach(function(b){ b.className=""; });
+  var activeBtn=document.querySelector('#tabs button[data-tab="'+TAB+'"]');
+  if(activeBtn) activeBtn.className = TAB==="all" ? "on-all" : TAB==="unfollow" ? "on-unfollow" : "on-follow";
+}
+
+function renderChart(snaps){
+  var el=$("chart");
+  if(!snaps||snaps.length<2){
+    el.innerHTML='<div class="empty" style="padding:34px 20px"><div class="ic">'+IC.radar+'</div><div class="t" style="font-size:15px">Noch kein Verlauf</div><p>Nach dem zweiten Sync entsteht hier deine Follower-Kurve.</p></div>';
+    return;
+  }
+  var W=640,H=150,P=8;
+  var vals=snaps.map(function(s){return s.total});
+  var min=Math.min.apply(null,vals), max=Math.max.apply(null,vals);
+  var span=Math.max(max-min,1), lo=min-Math.max(1,Math.round(span*.15));
+  function px(i){return P+(i/(snaps.length-1))*(W-2*P)}
+  function py(v){return H-P-((v-lo)/(max-lo||1))*(H-2*P)}
+  var line=snaps.map(function(s,i){return (i?"L":"M")+px(i).toFixed(1)+","+py(s.total).toFixed(1)}).join(" ");
+  var area=line+" L"+px(snaps.length-1).toFixed(1)+","+(H-2)+" L"+px(0).toFixed(1)+","+(H-2)+" Z";
+  var dots=snaps.map(function(s,i){
+    return '<circle cx="'+px(i).toFixed(1)+'" cy="'+py(s.total).toFixed(1)+'" r="3.4" fill="#0b0912" stroke="#c084fc" stroke-width="2"><title>'+esc(fmtDate(s.at))+': '+esc(fmtNum(s.total))+' Follower</title></circle>';
+  }).join("");
+  var delta=vals[vals.length-1]-vals[0];
+  var dCls=delta>0?"mint":delta<0?"danger":"flat";
+  var dTxt=(delta>0?"+":"")+fmtNum(delta)+" seit Start";
+  el.innerHTML=
+    '<svg viewBox="0 0 '+W+' '+H+'" style="width:100%;height:150px">'+
+    '<defs><linearGradient id="af" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#9146ff" stop-opacity=".45"/><stop offset="1" stop-color="#9146ff" stop-opacity="0"/></linearGradient>'+
+    '<linearGradient id="ls" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#c084fc"/><stop offset="1" stop-color="#ff4fc8"/></linearGradient></defs>'+
+    '<path d="'+area+'" fill="url(#af)"/><path d="'+line+'" fill="none" stroke="url(#ls)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>'+dots+'</svg>'+
+    '<div style="display:flex;justify-content:space-between;align-items:center;font-size:12px;color:var(--faint);margin-top:6px"><span>'+esc(fmtDate(snaps[0].at))+'</span><span class="chip '+dCls+'" style="margin:0">'+esc(dTxt)+'</span><span>'+esc(fmtDate(snaps[snaps.length-1].at))+'</span></div>';
+}
+
+function renderList(){
+  var store=LAST_STORE;
+  var events=store.events.filter(function(e){ return TAB==="all"||e.type===TAB; });
+  var box=$("event-list");
+  if(store.events.length===0){
+    box.innerHTML='<div class="empty"><div class="ic">'+IC.radar+'</div><div class="t">Radar ist kalibriert</div>'+
+      '<p>Deine Follower-Liste ist als Baseline gespeichert. Sobald jemand folgt oder entfolgt, taucht die Person beim nächsten Besuch hier auf. Tipp: einfach täglich kurz diese Seite öffnen.</p></div>';
+    return;
+  }
+  if(events.length===0){
+    var ic=TAB==="unfollow"?IC.ghost:IC.users;
+    var t=TAB==="unfollow"?"Niemand ist entfolgt":"Noch keine neuen Follower";
+    var p=TAB==="unfollow"?"Seit Tracking-Start hat dich niemand verlassen – weiter so!":"Seit der Baseline ist niemand Neues dazugekommen.";
+    box.innerHTML='<div class="empty"><div class="ic">'+ic+'</div><div class="t">'+t+'</div><p>'+p+'</p></div>';
+    return;
+  }
+  box.innerHTML=events.slice(0,150).map(function(e){
+    var unf=e.type==="unfollow";
+    var name=e.name||e.login||("User "+e.id);
+    var meta="";
+    if(unf){ meta="@"+(e.login||"?"); if(e.followedAt) meta+=" · folgte seit "+fmtDate(e.followedAt); }
+    else { meta="@"+(e.login||"?")+(e.refollow?" · ist zurückgekehrt":""); }
+    return '<div class="event">'+avatarHtml(name,e.img,unf?"ring-danger":"ring-mint")+
+      '<div class="info"><a class="name" href="https://twitch.tv/'+encodeURIComponent(e.login||"")+'" target="_blank" rel="noreferrer">'+esc(name)+'</a>'+
+      '<div class="meta">'+esc(meta)+'</div></div>'+
+      '<div class="right"><span class="tag '+(unf?"danger":"mint")+'">'+(unf?IC.minus+" ENTFOLGT":IC.plus+(e.refollow?" WIEDER DA":" NEU"))+'</span>'+
+      '<div class="small" style="margin-top:5px">'+esc(timeAgo(e.at))+'</div></div></div>';
+  }).join("");
+  if(events.length>150) box.innerHTML+='<p class="small" style="text-align:center;margin-top:12px">Die letzten 150 Ereignisse werden angezeigt.</p>';
+}
+
+/* ================= Dashboard laden ================= */
+function enterDashboard(){
+  return api("/users").then(function(d){
+    ME=d.data[0];
+    if(!ME) throw {http:0};
+    $("panel-hero").classList.add("hidden");
+    $("panel-setup").classList.add("hidden");
+    $("panel-dash").classList.remove("hidden");
+    return syncNow(true);
+  }).catch(function(err){
+    if(err&&err.auth){
+      localStorage.removeItem(LS_TOKEN);
+      showLogin();
+      toast("Deine Twitch-Sitzung ist abgelaufen – bitte erneut anmelden.","warn");
+    } else {
+      toast("Twitch ist gerade nicht erreichbar. Bitte später erneut versuchen.","err");
+    }
+  });
+}
+
+var SYNCING=false;
+function syncNow(auto){
+  if(SYNCING) return Promise.resolve();
+  if(!auto && LAST_STORE && LAST_STORE.lastSync && (Date.now()-new Date(LAST_STORE.lastSync).getTime())<10000){
+    toast("Gerade erst synchronisiert – kurz warten.","warn");
+    return Promise.resolve();
+  }
+  SYNCING=true;
+  $("btn-sync").setAttribute("disabled","1");
+  $("sync-ic").classList.add("spin");
+  $("sync-label").textContent="Synchronisiere …";
+  if(!auto) banner(null);
+
+  return doSync().then(function(r){
+    LAST_STORE=r.store; LAST_TOTAL=r.total;
+    render();
+    if(r.baseline){
+      if(auto || !auto) banner("Baseline angelegt: <b>"+esc(fmtNum(r.total))+"</b> Follower erfasst. Ab jetzt wird jede Änderung erkannt – komm einfach regelmäßig wieder.","ok");
+    } else {
+      var parts=[];
+      if(r.newCount) parts.push("<b>"+r.newCount+"</b> neue Follower");
+      if(r.reCount) parts.push("<b>"+r.reCount+"</b> Wiederkehrer");
+      if(r.goneCount) parts.push("<b>"+r.goneCount+"</b> Entfolgung"+(r.goneCount===1?"":"en"));
+      banner(parts.length?("Sync fertig: "+parts.join(" · ")+"."):"Sync fertig – keine Veränderungen seit dem letzten Mal.","ok");
+      if(r.goneCount||r.newCount||r.reCount) toast(parts.join(" · "),r.goneCount?"err":"ok");
+    }
+    setTimeout(function(){ banner(null); }, auto?9000:7000);
+  }).catch(function(err){
+    if(err&&err.auth){
+      localStorage.removeItem(LS_TOKEN);
+      showLogin();
+      toast("Twitch-Token ungültig oder abgelaufen – bitte neu anmelden.","err");
+    } else {
+      banner("Synchronisierung fehlgeschlagen – bitte gleich noch einmal versuchen.","err");
+    }
+  }).finally(function(){
+    SYNCING=false;
+    $("btn-sync").removeAttribute("disabled");
+    $("sync-ic").classList.remove("spin");
+    $("sync-label").textContent="Jetzt synchronisieren";
+  });
+}
+
+/* ================= Panels ================= */
+function showSetup(){
+  $("redirect-url").textContent=redirectUri();
+  var cid=getClientId();
+  if(cid) $("input-client-id").value=cid;
+  $("panel-setup").classList.remove("hidden");
+  $("panel-setup").scrollIntoView({behavior:"smooth",block:"center"});
+}
+function showLogin(){
+  $("panel-dash").classList.add("hidden");
+  $("panel-hero").classList.remove("hidden");
+}
+
+/* ================= Events & Start ================= */
+$("btn-login").addEventListener("click",login);
+$("btn-setup-toggle").addEventListener("click",function(){
+  $("panel-setup").classList.toggle("hidden");
+  if(!$("panel-setup").classList.contains("hidden")) showSetup();
+});
+$("copy-redirect").addEventListener("click",function(){
+  var t=redirectUri();
+  if(navigator.clipboard) navigator.clipboard.writeText(t).then(function(){toast("Redirect-URL kopiert.","ok")});
+  else { var ta=document.createElement("textarea");ta.value=t;document.body.appendChild(ta);ta.select();document.execCommand("copy");ta.remove();toast("Redirect-URL kopiert.","ok"); }
+});
+$("btn-save-client").addEventListener("click",function(){
+  var v=$("input-client-id").value.trim();
+  if(v.length<10){ toast("Das sieht nicht nach einer gültigen Client-ID aus.","err"); return; }
+  localStorage.setItem(LS_CLIENT,v);
+  toast("Client-ID gespeichert – jetzt oben bei Twitch anmelden.","ok");
+  $("panel-setup").classList.add("hidden");
+  $("btn-setup-toggle").textContent="Einrichtung anzeigen";
+});
+$("btn-sync").addEventListener("click",function(){ syncNow(false); });
+$("btn-logout").addEventListener("click",function(){
+  localStorage.removeItem(LS_TOKEN);
+  ME=null; LAST_STORE=null;
+  showLogin();
+  toast("Abgemeldet. Deine gespeicherten Daten bleiben in diesem Browser erhalten.","ok");
+});
+$("tabs").addEventListener("click",function(e){
+  var b=e.target.closest("button"); if(!b) return;
+  TAB=b.getAttribute("data-tab");
+  render();
+});
+$("btn-export").addEventListener("click",function(){
+  if(!ME) return;
+  var blob=new Blob([JSON.stringify(loadStore(),null,2)],{type:"application/json"});
+  var a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="unfollowradar-"+ME.login+"-"+new Date().toISOString().slice(0,10)+".json";
+  a.click();
+  URL.revokeObjectURL(a.href);
+});
+$("input-import").addEventListener("change",function(e){
+  var f=e.target.files[0]; if(!f||!ME) return;
+  var rd=new FileReader();
+  rd.onload=function(){
+    try{
+      var s=JSON.parse(rd.result);
+      if(!(s&&s.followers&&s.unfollowed&&s.events&&s.snaps)) throw 0;
+      saveStore(s); LAST_STORE=s; render();
+      toast("Daten importiert.","ok");
+    }catch(x){ toast("Ungültige Datei – Import abgebrochen.","err"); }
+  };
+  rd.readAsText(f);
+  e.target.value="";
+});
+$("btn-change-client").addEventListener("click",function(){
+  if(confirm("Wirklich abmelden und die Client-ID ändern? Deine gespeicherten Tracker-Daten bleiben erhalten.")){
+    localStorage.removeItem(LS_TOKEN);
+    ME=null; showLogin(); showSetup();
+  }
+});
+
+/* Start */
+(function init(){
+  var hadToken=handleHash();
+  if(getToken()||hadToken){
+    enterDashboard();
+  } else {
+    showLogin();
+    if(!getClientId()) showSetup();
+  }
+})();
+</script>
+</body>
+</html>
